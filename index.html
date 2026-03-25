@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Aggressive Cache Clear Script -->
+  <script>
+    (function() {
+      const currentVersion = 'v1.1'; // Update this string to force a cache clear for all users
+      const storedVersion = localStorage.getItem('app_version');
+      
+      if (storedVersion !== currentVersion) {
+        localStorage.clear();
+        sessionStorage.clear();
+        localStorage.setItem('app_version', currentVersion);
+        
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (let name of names) caches.delete(name);
+          });
+        }
+        
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (let registration of registrations) {
+              registration.unregister();
+            }
+          });
+        }
+        
+        window.location.reload(true);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <title>Elexsiya 26 – National Level Technical Symposium</title>
+  <meta name="description"
+    content="Elexsiya 26 – National Level Technical Symposium at Anna University Regional Campus Madurai. Innovate. Inspire. Ignite." />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://api.qrserver.com; connect-src 'self' https://firestore.googleapis.com https://*.firebaseio.com https://api.emailjs.com;">
+  <!-- DNS / Connection pre-warming -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
+  <!-- Preload critical CSS -->
+  <link rel="preload" href="styles.css?v=4" as="style" />
+  <link rel="preload" href="landing.css?v=4" as="style" />
+  <!-- Non-blocking Google Fonts -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="landing.css?v=4" />
+
+<body>
+
+  <!-- ══ PRELOADER ══ -->
+  <div id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-logo">⚡ <span>Elexsiya</span></div>
+      <div class="preloader-bar-track">
+        <div class="preloader-bar" id="preloaderBar"></div>
+      </div>
+      <div class="preloader-sub">National Level Technical Symposium</div>
+    </div>
+  </div>
+
+  <!-- ══ CUSTOM CURSOR ══ -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ======== Navbar ======== -->
+  <nav class="navbar" id="mainNav">
+    <div class="container">
+      <a href="#" class="logo">
+        <img src="logo.jpg" alt="Elexsiya 26" class="logo-img" fetchpriority="high" loading="eager" />
+        <span class="logo-text">Elexsiya</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#prizes">Prizes</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="login.html" style="color: var(--primary); font-weight: 700;">Login</a></li>
+        <li><a href="admin.html">Admin</a></li>
+        <li><a href="chess_intracollege_register.html" style="color: #cc0000; font-weight: 700;">♟️ Chess Intracollege</a></li>
+        <li class="dropdown-nav">
+          <a href="#" class="dropdown-toggle">Service <span class="arrow">▼</span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" onclick="openEventModal('chess', true); return false;">Chess</a></li>
+            <li><a href="#" onclick="openEventModal('idea-forge', true); return false;">Ideaforge</a></li>
+          </ul>
+        </li>
+        <li><a href="events.html" class="nav-cta">Register Now</a></li>
+      </ul>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ======== Hero ======== -->
+  <header class="hero" id="hero">
+    <div class="hero-content">
+      <span class="hero-eyebrow luxury-gold">National Level Technical Symposium</span>
+      <h1 class="hero-title">Elexsiya 26</h1>
+      <p class="hero-subtitle">Innovate · Inspire · Ignite</p>
+      <p class="hero-subtitle" style="font-size: 1.1rem; margin-top: 15px;">
+        <strong>MARCH 27, 2026</strong> &nbsp;·&nbsp;
+        ANNA UNIVERSITY REGIONAL CAMPUS, MADURAI
+      </p>
+      <p class="hero-subtitle"
+        style="font-size: 1rem; color: var(--primary); margin-top: 5px; margin-bottom: 40px; font-weight: 600;">
+        PRESENTED BY DEPARTMENT OF ECE
+      </p>
+
+      <!-- ══ COUNTDOWN ══ -->
+      <div class="hero-anim-wrap">
+        <div class="hanim-countdown">
+          <div class="hanim-countdown-title">⏳ Event Begins In</div>
+          <div class="hanim-countdown-grid" id="hcGrid">
+            <div class="hanim-cd-unit">
+              <span class="hanim-cd-num" id="hcDays">00</span>
+              <span class="hanim-cd-lbl">Days</span>
+            </div>
+            <div class="hanim-cd-sep">:</div>
+            <div class="hanim-cd-unit">
+              <span class="hanim-cd-num" id="hcHours">00</span>
+              <span class="hanim-cd-lbl">Hrs</span>
+            </div>
+            <div class="hanim-cd-sep">:</div>
+            <div class="hanim-cd-unit">
+              <span class="hanim-cd-num" id="hcMins">00</span>
+              <span class="hanim-cd-lbl">Min</span>
+            </div>
+            <div class="hanim-cd-sep">:</div>
+            <div class="hanim-cd-unit">
+              <span class="hanim-cd-num" id="hcSecs">00</span>
+              <span class="hanim-cd-lbl">Sec</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="hero-actions">
+          <a href="events.html" class="btn btn-red btn-lg" id="registerBtn">🎯 Register Now</a>
+          <a href="#events" class="btn btn-outline-white btn-lg">Explore Events</a>
+          <a href="brochure.pdf" class="btn btn-outline-white btn-lg"
+            style="border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.9);" download>📄 Download Brochure</a>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <span>Scroll Down</span>
+        <div class="scroll-arrow"></div>
+      </div>
+  </header>
+
+  <!-- ══ MARQUEE STRIP ══ -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span>⚡ Elexsiya 26</span>
+      <span class="marquee-dot">✦</span>
+      <span>🏆 Prizes 15k+</span>
+      <span class="marquee-dot">✦</span>
+      <span>🚀 March 27, 2026</span>
+      <span class="marquee-dot">✦</span>
+      <span>💡 10+ Events</span>
+      <span class="marquee-dot">✦</span>
+      <span>🎓 Anna University Madurai</span>
+      <span class="marquee-dot">✦</span>
+      <span>👥 200+ Participants</span>
+      <span class="marquee-dot">✦</span>
+      <span>🌟 50+ Colleges</span>
+      <span class="marquee-dot">✦</span>
+      <!-- duplicate for seamless loop -->
+      <span>⚡ Elexsiya 26</span>
+      <span class="marquee-dot">✦</span>
+      <span>🏆 Prizes 15k+</span>
+      <span class="marquee-dot">✦</span>
+      <span>🚀 March 27, 2026</span>
+      <span class="marquee-dot">✦</span>
+      <span>💡 10+ Events</span>
+      <span class="marquee-dot">✦</span>
+      <span>🎓 Anna University Madurai</span>
+      <span class="marquee-dot">✦</span>
+      <span>👥 200+ Participants</span>
+      <span class="marquee-dot">✦</span>
+      <span>🌟 50+ Colleges</span>
+      <span class="marquee-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ======== Stats Strip ======== -->
+  <section class="stats-strip">
+    <div class="container">
+      <div class="strip-stat animate-on-scroll">
+        <div class="strip-stat-value">10+</div>
+        <div class="strip-stat-label">Events</div>
+      </div>
+      <div class="strip-stat animate-on-scroll delay-1">
+        <div class="strip-stat-value">15k+</div>
+        <div class="strip-stat-label">Prize Pool</div>
+      </div>
+      <div class="strip-stat animate-on-scroll delay-2">
+        <div class="strip-stat-value">50+</div>
+        <div class="strip-stat-label">Colleges</div>
+      </div>
+      <div class="strip-stat animate-on-scroll delay-3">
+        <div class="strip-stat-value">200+</div>
+        <div class="strip-stat-label">Participants</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== About ======== -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title gold-shimmer animate-on-scroll">About the Symposium</h2>
+      <div class="about-intro animate-on-scroll">
+        <p class="lead">
+          Where technology meets creativity.
+          <span>A day of technical challenges, tech talks, and competitive events — designed to challenge, inspire, and
+            connect the brightest minds across the country.</span>
+        </p>
+      </div>
+      <div class="about-grid">
+        <div class="about-tile animate-on-scroll">
+          <div class="tile-icon">🎓</div>
+          <h3>Learn &amp; Grow</h3>
+          <p>Inspiring tech talks and technical sessions led by industry experts and renowned academicians.</p>
+        </div>
+        <div class="about-tile animate-on-scroll delay-1">
+          <div class="tile-icon">🤝</div>
+          <h3>Network</h3>
+          <p>Connect with 200+ tech enthusiasts from 50+ colleges. Build relationships that last a lifetime.</p>
+        </div>
+        <div class="about-tile animate-on-scroll delay-2">
+          <div class="tile-icon">🏆</div>
+          <h3>Compete &amp; Win</h3>
+          <p>Showcase your skills across 10+ events and win exciting prizes!</p>
+        </div>
+        <div class="about-tile animate-on-scroll delay-3">
+          <div class="tile-icon">💡</div>
+          <h3>Innovate</h3>
+          <p>From paper presentations to project expos — bring your ideas to life and let your creativity shine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== Events ======== -->
+  <section class="section section-light" id="events">
+    <div class="container">
+      <h2 class="section-title gold-shimmer animate-on-scroll">Events</h2>
+      <p class="section-subtitle animate-on-scroll">Our exciting lineup of Technical &amp; Non-Technical events.</p>
+
+      <!-- Technical -->
+      <div class="event-category">
+        <div class="category-label animate-on-scroll">Technical Events</div>
+        <div class="events-grid">
+          <div class="event-tile animate-on-scroll" data-event-id="project-expo">
+            <div class="tile-emoji">🧑‍💻</div>
+            <h4>Project Expo</h4>
+            <p>Showcase your innovative projects to a panel of expert judges. Bring your ideas to life and impress!</p>
+            <div class="event-card-footer">
+              <span class="tile-tag team">Team of 2 or 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn" onclick="openContactModal('Project Expo', '+91 8903446710')">📞
+                  Contact</button>
+                <button class="event-info-btn" onclick="openEventModal('project-expo')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-tile animate-on-scroll delay-1" data-event-id="idea-forge">
+            <div class="tile-emoji">🌐</div>
+            <h4>Idea Forge</h4>
+            <p>Pitch your groundbreaking ideas and turn concepts into reality. Innovation starts here.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag team">Team of 2 or 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn" onclick="openContactModal('Idea Forge', '+91 9363306893')">📞
+                  Contact</button>
+                <button class="event-info-btn" onclick="openEventModal('idea-forge', true)">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-tile animate-on-scroll delay-2" data-event-id="tazky-among-uz">
+            <div class="tile-emoji">🤖</div>
+            <h4>Tazky Among Uz</h4>
+            <p>Complete tasks, find the impostor, and survive! A thrilling strategy-based team challenge.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag team">Team of 2 or 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn" onclick="openContactModal('Tazky among uz', '+91 9790920311')">📞
+                  Contact</button>
+                <button class="event-info-btn" onclick="openEventModal('tazky-among-uz')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-tile animate-on-scroll delay-3" data-event-id="currentclash">
+            <div class="tile-emoji">📊</div>
+            <h4>CurrentClash</h4>
+            <p>Battle it out in electrifying circuit and electronics challenges. Only the sharpest minds prevail.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag team">Team of 2 or 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn" onclick="openContactModal('CurrentClash', '+91 6382745529')">📞
+                  Contact</button>
+                <button class="event-info-btn" onclick="openEventModal('currentclash')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-tile animate-on-scroll" data-event-id="clever-hunt">
+            <div class="tile-emoji">🔐</div>
+            <h4>Clever Hunt</h4>
+            <p>Solve riddles, decode clues, and race against time in this ultimate treasure hunt challenge.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag team">Team of 2 or 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn" onclick="openContactModal('Clever Hunt', '+91 9345399662')">📞
+                  Contact</button>
+                <button class="event-info-btn" onclick="openEventModal('clever-hunt')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-tile animate-on-scroll delay-1" data-event-id="bug-arena">
+            <div class="tile-emoji">📱</div>
+            <h4>Bug Arena</h4>
+            <p>Find and fix bugs in tricky code snippets. The fastest debugger wins the crown!</p>
+            <div class="event-card-footer">
+              <span class="tile-tag team">Team of 2 or 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn" onclick="openContactModal('Bug Arena', '+91 6382855497')">📞
+                  Contact</button>
+                <button class="event-info-btn" onclick="openEventModal('bug-arena')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Non-Technical -->
+      <div class="event-category">
+        <div class="category-label animate-on-scroll">Non-Technical Events</div>
+        <div class="events-grid">
+          <div class="event-tile animate-on-scroll" data-event-id="upside-down">
+            <div class="tile-emoji">🎤</div>
+            <h4>Upside Down</h4>
+            <p>Everything you know is flipped! Think backwards, act fast, and conquer this topsy-turvy challenge.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag team">Team of 2 or 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn nt" onclick="openContactModal('Upside Down', '+91 8220263763')">📞
+                  Contact</button>
+                <button class="event-info-btn nt" onclick="openEventModal('upside-down')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-tile animate-on-scroll delay-1" data-event-id="mindfusion">
+            <div class="tile-emoji">🎨</div>
+            <h4>Mindfusion</h4>
+            <p>Fuse logic, creativity, and teamwork to crack mind-bending puzzles and brain teasers.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag solo">Team of 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn nt" onclick="openContactModal('Mindfusion', '+91 9597838995')">📞
+                  Contact</button>
+                <button class="event-info-btn nt" onclick="openEventModal('mindfusion')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-tile animate-on-scroll delay-2" data-event-id="unmuted">
+            <div class="tile-emoji">🎮</div>
+            <h4>Unmuted</h4>
+            <p>Speak up and stand out! An open-mic style event to share ideas, stories, and bold opinions.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag solo">Team of 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn nt" onclick="openContactModal('Unmuted', '+91 8122733877')">📞
+                  Contact</button>
+                <button class="event-info-btn nt" onclick="openEventModal('unmuted')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="event-tile animate-on-scroll delay-3" data-event-id="ideart">
+            <div class="tile-emoji">📸</div>
+            <h4>Ideart</h4>
+            <p>Where ideas meet art. Express your imagination through creative design and visual storytelling.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag solo">Team of 3</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn nt" onclick="openContactModal('Ideart', '+91 8428863152')">📞
+                  Contact</button>
+                <button class="event-info-btn nt" onclick="openEventModal('ideart')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Special -->
+      <div class="event-category">
+        <div class="category-label animate-on-scroll">Special Event</div>
+        <div class="events-grid">
+          <div class="event-tile feature animate-on-scroll" data-event-id="chess">
+            <div class="tile-emoji">♟️</div>
+            <h4>Chess</h4>
+            <p>Battle of minds! Outsmart your opponent in this classic strategy showdown. All skill levels welcome.</p>
+            <div class="event-card-footer">
+              <span class="tile-tag solo">Individual</span>
+              <div style="display: flex; gap: 8px;">
+                <button class="event-info-btn sp" onclick="openContactModal('Chess', '+91 9171389393')">📞
+                  Contact</button>
+                <button class="event-info-btn sp" onclick="openEventModal('chess')">ⓘ Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Event Detail Modal ── -->
+      <div id="eventModal" class="emodal-overlay" onclick="if(event.target===this)closeEventModal()">
+        <div class="emodal-card" id="eventModalCard">
+          <button class="emodal-close" onclick="closeEventModal()">✕</button>
+          <button id="eModalAdminBtn" class="emodal-admin" onclick="openEventAdmin()" style="display:none;"
+            title="Admin Dashboard">⚙️</button>
+          <div class="emodal-icon" id="eModalIcon"></div>
+          <h2 class="emodal-title" id="eModalTitle"></h2>
+          <span class="emodal-tag" id="eModalTag"></span>
+          <p class="emodal-desc" id="eModalDesc"></p>
+          <div class="emodal-highlights" id="eModalHighlights"></div>
+          <a href="events.html" class="emodal-cta" id="eModalRegisterBtn">Register Now →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ UNIFIED EVENT TIMELINE ══ -->
+  <section class="section section-timeline" id="schedule">
+    <div class="container">
+      <h2 class="section-title gold-shimmer animate-on-scroll">Event Schedule</h2>
+      <p class="section-subtitle animate-on-scroll">The master schedule for Technical & Non-Technical events.</p>
+
+      <div class="timeline-wrapper animate-on-scroll">
+        <div class="timeline-track"></div>
+
+        <!-- 10:00 AM Slot -->
+        <div class="timeline-item paired">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content left" id="event-ideaforge">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">10:00 AM - 01:00 PM</div>
+            <h4 class="timeline-title">Ideaforge</h4>
+            <p class="timeline-desc">Pitch groundbreaking ideas and turn concepts into reality.</p>
+            <span class="tile-tag">Technical</span>
+          </div>
+          <div class="timeline-content right" id="event-project-expo">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">10:00 AM - 12:00 PM</div>
+            <h4 class="timeline-title">Project Expo</h4>
+            <p class="timeline-desc">Showcase innovative projects to a panel of expert judges.</p>
+            <span class="tile-tag">Technical</span>
+          </div>
+        </div>
+
+        <!-- 10:30 AM Slot -->
+        <div class="timeline-item paired">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content left" id="event-clever-hunt">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">10:30 AM - 11:30 AM</div>
+            <h4 class="timeline-title">Clever Hunt</h4>
+            <p class="timeline-desc">Solve riddles, decode clues, and race against time.</p>
+            <span class="tile-tag">Technical</span>
+          </div>
+          <div class="timeline-content right" id="event-ideart">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">10:30 AM - 11:30 AM</div>
+            <h4 class="timeline-title">Ideart</h4>
+            <p class="timeline-desc">Express imagination through creative design and storytelling.</p>
+            <span class="tile-tag nt">Non-Tech</span>
+          </div>
+        </div>
+
+        <!-- 11:30 AM Slot (Break & Current Clash) -->
+        <div class="timeline-item paired">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content left highlight-break" id="event-refreshing-break">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">11:30 AM - 11:45 AM</div>
+            <h4 class="timeline-title">Refreshing Break</h4>
+            <p class="timeline-desc">A quick breather to recharge before the next challenge.</p>
+          </div>
+          <div class="timeline-content right" id="event-current-clash">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">11:30 AM - 01:00 PM</div>
+            <h4 class="timeline-title">Current Clash</h4>
+            <p class="timeline-desc">Battle it out in electrifying circuit and electronics challenges.</p>
+            <span class="tile-tag">Technical</span>
+          </div>
+        </div>
+
+        <!-- 11:45 AM Slot -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content" id="event-unmuted">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">11:45 AM - 01:00 PM</div>
+            <h4 class="timeline-title">Unmuted</h4>
+            <p class="timeline-desc">Speak up and stand out! An open-mic style event for bold opinions.</p>
+            <span class="tile-tag nt">Non-Tech</span>
+          </div>
+          <div class="timeline-icon">🎤</div>
+        </div>
+
+        <!-- 01:00 PM Slot -->
+        <div class="timeline-item highlight-lunch">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content" id="event-lunch">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">01:00 PM - 02:00 PM</div>
+            <h4 class="timeline-title">Lunch Break</h4>
+            <p class="timeline-desc">Refuel and network with fellow participants.</p>
+          </div>
+          <div class="timeline-icon">🍱</div>
+        </div>
+
+        <!-- 02:00 PM Slot -->
+        <div class="timeline-item paired">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content left" id="event-bug-arena">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">02:00 PM - 03:00 PM</div>
+            <h4 class="timeline-title">Bug Arena</h4>
+            <p class="timeline-desc">Find and fix bugs in tricky code snippets. The fastest wins!</p>
+            <span class="tile-tag">Technical</span>
+          </div>
+          <div class="timeline-content right" id="event-mindfusion">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">02:00 PM - 03:00 PM</div>
+            <h4 class="timeline-title">Mindfusion</h4>
+            <p class="timeline-desc">Fuse logic, creativity, and teamwork to crack puzzles.</p>
+            <span class="tile-tag nt">Non-Tech</span>
+          </div>
+        </div>
+
+        <!-- 03:00 PM Slot -->
+        <div class="timeline-item paired">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content left" id="event-tazky">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">03:00 PM - 04:00 PM</div>
+            <h4 class="timeline-title">Tazky Among Uz</h4>
+            <p class="timeline-desc">Complete tasks, find the impostor, and survive!</p>
+            <span class="tile-tag">Technical</span>
+          </div>
+          <div class="timeline-content right" id="event-upside-down">
+            <div class="live-indicator">LIVE</div>
+            <div class="timeline-time">03:00 PM - 04:00 PM</div>
+            <h4 class="timeline-title">Upside Down</h4>
+            <p class="timeline-desc">Everything you know is flipped! Act fast and conquer.</p>
+            <span class="tile-tag nt">Non-Tech</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== Prizes ======== -->
+  <section class="section" id="prizes">
+    <div class="container">
+      <h2 class="section-title gold-shimmer animate-on-scroll">Prizes &amp; Rewards</h2>
+      <div class="prizes-headline animate-on-scroll">
+        <div class="big-number"></div>
+        <p>in prizes and rewards — compete hard, win big.</p>
+      </div>
+      <div class="prizes-grid">
+        <div class="prize-tile prize-gold animate-on-scroll">
+          <div class="medal">🥇</div>
+          <div class="place">1st Place</div>
+          <div class="amount"></div>
+          <div class="includes">Trophy + Certificate + Goodies</div>
+        </div>
+        <div class="prize-tile animate-on-scroll delay-1">
+          <div class="medal">🥈</div>
+          <div class="place">2nd Place</div>
+          <div class="amount"></div>
+          <div class="includes">Trophy + Certificate + Goodies</div>
+        </div>
+        <div class="prize-tile animate-on-scroll delay-2">
+          <div class="medal">🥉</div>
+          <div class="place">3rd Place</div>
+          <div class="amount"></div>
+          <div class="includes">Certificate + Goodies</div>
+        </div>
+      </div>
+      <div class="extras-bar animate-on-scroll">
+        <div class="extras-list">
+          <div class="extra"><span>🏅</span> Best Performer Award</div>
+          <div class="extra"><span>📜</span> Participation Certificates for All</div>
+          <div class="extra"><span>🧠</span> Skill Development</div>
+          <div class="extra"><span>🤝</span> Networking Opportunities</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======== Venue & Directions ======== -->
+  <section class="section" id="venue">
+    <div class="container">
+      <h2 class="section-title gold-shimmer animate-on-scroll">Venue & Directions</h2>
+      <p class="section-subtitle animate-on-scroll">Anna University Regional Campus, Madurai</p>
+
+      <div class="venue-grid">
+        <!-- Location Card -->
+        <div class="venue-card animate-on-scroll">
+          <div class="venue-icon">📍</div>
+          <h3>Our Location</h3>
+          <p>Kanyakumari National Highway, Keelakuilkudi, Madurai, Tamil Nadu 625019</p>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Anna+University+Regional+Campus+Madurai"
+            target="_blank" rel="noopener noreferrer" class="btn btn-red btn-sm"
+            style="margin-top: 15px; display: inline-block;">
+            Get Directions
+          </a>
+        </div>
+
+        <!-- Bus Route Card -->
+        <div class="venue-card animate-on-scroll delay-1">
+          <div class="venue-icon">&#128652;</div>
+          <h3>Public Transport</h3>
+
+          <button id="viewRoutesBtn" onclick="toggleBusRoutes()" class="btn btn-outline-dark btn-sm" style="margin-bottom: 10px; width: 100%;">
+            <span>🚌</span> View Bus Routes
+          </button>
+          <button id="viewTimingsBtn" onclick="toggleBusTimings()" class="btn btn-outline-dark btn-sm" style="margin-bottom: 20px; width: 100%;">
+            <span>🚌</span> View Bus Number and Timing
+          </button>
+
+          <div id="busTimingsContent" style="display: none; animation: fadeIn 0.4s ease; background: #fff8f8; padding: 15px; border-radius: 12px; border: 1px solid var(--border-light); margin-bottom: 20px;">
+            <p style="margin-bottom: 12px; color: var(--emirates-red); font-weight: 800; font-size: 0.95rem;">🕒 Bus Schedule</p>
+            
+            <!-- Route 1 -->
+            <div style="text-align: left; font-size: 0.85rem; line-height: 1.6; color: var(--text-dark); margin-bottom: 20px;">
+              <div style="background: var(--emirates-red); color: white; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px; font-weight: 700;">
+                7:30 AM to 7:40 AM
+              </div>
+              <p style="font-weight: 700; margin-bottom: 4px;">MATTUTHAVANI TO ANNA UNIVERSITY</p>
+              <p style="color: var(--text-muted); font-style: italic; margin-bottom: 12px;">Route Details:</p>
+              <div style="position: relative; padding-left: 15px; border-left: 2px solid var(--border-light);">
+                <p><strong>MGR Nilaiyam</strong> <span class="bus-badge" style="background:#333;">14BA</span></p>
+                <p>↓ GH</p>
+                <p>↓ East Gate</p>
+                <p>↓ Crime Branch <span style="color: var(--emirates-red); font-weight: 600;">(7:50 - 8:00 AM)</span></p>
+                <p>↓ Palanganatham</p>
+                <p>↓ Thirunagar</p>
+                <p>🏁 <strong>ANNA UNIVERSITY</strong></p>
+              </div>
+            </div>
+
+            <div style="height: 1px; background: var(--border-light); margin-bottom: 20px; opacity: 0.5;"></div>
+
+            <!-- Route 2 -->
+            <div style="text-align: left; font-size: 0.85rem; line-height: 1.6; color: var(--text-dark); margin-bottom: 20px;">
+              <div style="background: var(--emirates-red); color: white; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px; font-weight: 700;">
+                7:30 AM to 7:50 AM
+              </div>
+              <p style="font-weight: 700; margin-bottom: 4px;">MATTUTHAVANI TO ANNA UNIVERSITY</p>
+              <p style="color: var(--text-muted); font-style: italic; margin-bottom: 12px;">Route Details:</p>
+              <div style="position: relative; padding-left: 15px; border-left: 2px solid var(--border-light);">
+                <p><strong>MGR Nilaiyam</strong> <span class="bus-badge" style="background:#333;">21CA</span></p>
+                <p>↓ Koripalayam</p>
+                <p>↓ Junction</p>
+                <p>↓ Periyar <span style="color: var(--emirates-red); font-weight: 600;">(7:55 - 8:10 AM)</span></p>
+                <p>↓ Kalavasal <span style="color: var(--emirates-red); font-weight: 600;">(8:20 AM)</span></p>
+                <p>↓ KMR School</p>
+                <p>🏁 <strong>ANNA UNIVERSITY</strong></p>
+              </div>
+            </div>
+
+            <div style="height: 1px; background: var(--border-light); margin-bottom: 20px; opacity: 0.5;"></div>
+
+            <!-- Route 3 -->
+            <div style="text-align: left; font-size: 0.85rem; line-height: 1.6; color: var(--text-dark); margin-bottom: 20px;">
+              <div style="background: var(--emirates-red); color: white; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px; font-weight: 700;">
+                8:00 AM to 8:10 AM
+              </div>
+              <p style="font-weight: 700; margin-bottom: 4px;">THIRUMANGALAM TO ANNA UNIVERSITY</p>
+              <p style="color: var(--text-muted); font-style: italic; margin-bottom: 12px;">Route Details:</p>
+              <div style="position: relative; padding-left: 15px; border-left: 2px solid var(--border-light);">
+                <p><strong>Thirumangalam</strong> <span class="bus-badge" style="background:#333;">48UT</span></p>
+                <p>↓ Kappaloor Tollgate</p>
+                <p>↓ Koothiyar Kundu</p>
+                <p>🏁 <strong>ANNA UNIVERSITY</strong></p>
+              </div>
+            </div>
+
+            <div style="height: 1px; background: var(--border-light); margin-bottom: 20px; opacity: 0.5;"></div>
+
+            <!-- Route 4 -->
+            <div style="text-align: left; font-size: 0.85rem; line-height: 1.6; color: var(--text-dark);">
+              <div style="background: var(--emirates-red); color: white; padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 8px; font-weight: 700;">
+                7:50 AM to 8:00 AM
+              </div>
+              <p style="font-weight: 700; margin-bottom: 4px;">ARAPPALAYAM TO ANNA UNIVERSITY</p>
+              <p style="color: var(--text-muted); font-style: italic; margin-bottom: 12px;">Route Details:</p>
+              <div style="position: relative; padding-left: 15px; border-left: 2px solid var(--border-light);">
+                <p><strong>Aarappalayam</strong> <span class="bus-badge" style="background:#333;">48UT</span></p>
+                <p>↓ Guru Theater</p>
+                <p>↓ Kalavasal</p>
+                <p>↓ Acham Pathu</p>
+                <p>🏁 <strong>ANNA UNIVERSITY</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <div id="busRoutesContent" style="display: none; animation: fadeIn 0.4s ease;">
+            <p style="margin-bottom: 8px; color: var(--emirates-red); font-weight: 700;">From Aarapalayam:</p>
+            <ol
+              style="text-align: left; margin: 0 0 16px 20px; font-size: 0.9rem; color: var(--text-dark); line-height: 1.6;">
+              <li>Take Bus <span class="bus-badge">48AD</span> to Thirumangalam.</li>
+              <li>Get down at <strong>Thirunagar 3rd Stop</strong>.</li>
+              <li>Take an auto to Anna University Regional Campus.</li>
+            </ol>
+
+            <p style="margin-bottom: 8px; color: var(--emirates-red); font-weight: 700;">From Periyar Bus Stand:</p>
+            <ol
+              style="text-align: left; margin: 0 0 16px 20px; font-size: 0.9rem; color: var(--text-dark); line-height: 1.6;">
+              <li>Take Bus <span class="bus-badge">48</span> to Thirumangalam.</li>
+              <li>Get down at <strong>Thirunagar 3rd Stop</strong>.</li>
+              <li>Take an auto to Anna University Regional Campus.</li>
+            </ol>
+
+            <p style="margin-bottom: 8px; color: var(--emirates-red); font-weight: 700;">From Thirumangalam:</p>
+            <ol
+              style="text-align: left; margin: 0 0 0 20px; font-size: 0.9rem; color: var(--text-dark); line-height: 1.6;">
+              <li><strong style="color: var(--gold-dark);">Option 1:</strong> Take Bus <span class="bus-badge">48UT</span>
+                direct to Anna University <br><span style="font-size: 0.8rem; color: var(--text-muted);">(Timing: 8:10 AM
+                  - 8:20 AM only)</span></li>
+              <li style="margin-top: 8px;"><strong style="color: var(--gold-dark);">Option 2:</strong> Take a bus to
+                <strong>Thirunagar 3rd Stop</strong> <br><span style="font-size: 0.8rem; color: var(--text-muted);">(Buses
+                  from Periyar, Aarapalayam, MGR Bus Stand, etc.)</span><br>Then take an auto to Anna University Regional
+                Campus.
+              </li>
+            </ol>
+          </div>
+
+          <div
+            style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-light); display: flex; flex-direction: column; gap: 10px;">
+            <button onclick="shareBusRoutes()" class="btn btn-outline-dark btn-sm"
+              style="width:100%; display:flex; justify-content:center; align-items:center; gap:8px;">
+              <span>&#128172;</span> Share Routes to WhatsApp
+            </button>
+            <div style="display: flex; gap: 10px;">
+              <button onclick="copyBusRoutes()" class="btn btn-outline-dark btn-sm" id="copyRoutesBtn"
+                style="flex: 1; display:flex; justify-content:center; align-items:center; gap:8px;">
+                <span>&#128203;</span> Copy Text
+              </button>
+              <button onclick="openLiveMaps()" class="btn btn-red btn-sm"
+                style="flex: 1; display:flex; justify-content:center; align-items:center; gap:8px;">
+                <span>&#128205;</span> Live Map
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ======== FAQ ======== -->
+  <section class="section" id="faq" style="background: var(--bg-light);">
+    <div class="container">
+      <h2 class="section-title gold-shimmer animate-on-scroll">Frequently Asked Questions</h2>
+      <p class="section-subtitle animate-on-scroll">Everything you need to know about Elexsiya 26.</p>
+
+      <div class="faq-container animate-on-scroll delay-1">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Is on-the-spot registration available?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, on-spot registration is available.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Will lunch be provided?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, lunch will be provided.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Will I get a participation certificate?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, a participation certificate will be provided.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I participate in multiple events?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, a participant can be in multiple events.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Are there accommodation options available?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes, accommodation will be provided if asked.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* ── FAQ Accordion Logic ──────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', () => {
+      const faqQuestions = document.querySelectorAll('.faq-question');
+
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+          const item = question.parentElement;
+          const answer = item.querySelector('.faq-answer');
+          const isOpen = item.classList.contains('active');
+
+          // Close all other open FAQs
+          document.querySelectorAll('.faq-item').forEach(otherItem => {
+            otherItem.classList.remove('active');
+            const otherAnswer = otherItem.querySelector('.faq-answer');
+            if (otherAnswer) otherAnswer.style.maxHeight = null;
+            const otherIcon = otherItem.querySelector('.faq-icon');
+            if (otherIcon) otherIcon.textContent = '+';
+            if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+          });
+
+          // Toggle current one
+          if (!isOpen) {
+            item.classList.add('active');
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            const icon = item.querySelector('.faq-icon');
+            if (icon) icon.textContent = '-';
+            if (icon) icon.style.transform = 'rotate(180deg)';
+          }
+        });
+      });
+    });
+  </script>
+
+
+
+  <!-- ======== Contact ======== -->
+  <section class="section section-dark" id="contact">
+    <div class="container">
+      <h2 class="section-title gold-shimmer animate-on-scroll">Contact</h2>
+      <p class="section-subtitle animate-on-scroll">Have questions? We're here to help.</p>
+      <div class="contact-grid">
+        <div class="contact-tile animate-on-scroll">
+          <div class="tile-emoji">📧</div>
+          <h4>Email</h4>
+          <p>elexsiyamediateam@gmail.com</p>
+        </div>
+        <div class="contact-tile animate-on-scroll delay-1">
+          <div class="tile-emoji">📱</div>
+          <h4>Phone</h4>
+          <p>+91 9790920311<br>+91 8122733877<br>+91 9597800532</p>
+        </div>
+        <div class="contact-tile animate-on-scroll delay-2">
+          <div class="tile-emoji">📍</div>
+          <h4>Venue</h4>
+          <p>Anna University Regional Campus<br>NH-7, Kanyakumari National Highway<br>Keelakuilkudi Road, Madurai –
+            625019<br>Tamil Nadu</p>
+        </div>
+        <div class="contact-tile animate-on-scroll delay-3">
+          <div class="tile-emoji">🌐</div>
+          <h4>Follow Us</h4>
+          <p>
+            <a href="https://www.instagram.com/elexsiya_26?igsh=MTBwMzhyencxcTl6Zw==" target="_blank"
+              rel="noopener noreferrer" style="color:inherit; text-decoration:none;">Instagram</a> · <a
+              href="https://www.linkedin.com/in/anna-university-regional-campus-madurai-elcosa-4aab113b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:none;">LinkedIn</a> ·
+            Twitter
+          </p>
+        </div>
+      </div>
+  </section>
+
+  <!-- ======== Footer ======== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">Elexsiya 26</span>
+          <p>National Level Technical Symposium by the Department of ECE, Anna University Regional Campus Madurai.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Navigate</h5>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#prizes">Prizes</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Participate</h5>
+          <ul>
+            <li><a href="events.html">Register</a></li>
+            <li><a href="login.html">Participant Login</a></li>
+            <li><a href="admin.html">Admin Login</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Connect</h5>
+          <ul>
+            <li><a href="https://www.instagram.com/elexsiya_26?igsh=MTBwMzhyencxcTl6Zw==" target="_blank"
+                rel="noopener noreferrer">Instagram</a>
+            </li>
+            <li><a
+                href="https://www.linkedin.com/in/anna-university-regional-campus-madurai-elcosa-4aab113b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="#">Twitter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Elexsiya – Anna University Regional Campus Madurai.</p>
+        <p>All rights reserved. |
+          <a href="terms.html" style="color: var(--gold); text-decoration: none;">Terms and Conditions</a> |
+          <a href="refund.html" style="color: var(--gold); text-decoration: none;">Refund Cancellation Policy</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======== Contact Modal (App-Open Style) ======== -->
+  <div id="contactModal" class="contact-modal-overlay">
+    <div class="contact-modal-content">
+      <button class="contact-modal-close" onclick="closeContactModal()">✕</button>
+      <div class="contact-modal-header">
+        <div class="contact-modal-avatar">🌐</div>
+        <h3 id="cModalTitle">Idea Forge Contact</h3>
+        <p>Event Coordinator Details</p>
+      </div>
+      <div class="contact-modal-body">
+        <div class="contact-info-item">
+          <span class="icon">📞</span>
+          <span class="text" id="cModalPhone">+91 9363306893</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Contact Modal Styling */
+    .contact-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 99995;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .contact-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .contact-modal-content {
+      background: #fff;
+      width: 90%;
+      max-width: 380px;
+      padding: 40px 30px;
+      border-radius: 24px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      transform: scale(0.8);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .contact-modal-overlay.active .contact-modal-content {
+      transform: scale(1);
+    }
+
+    .contact-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #f5f5f5;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      transition: background 0.2s;
+    }
+
+    .contact-modal-close:hover {
+      background: #eee;
+    }
+
+    .contact-modal-avatar {
+      width: 80px;
+      height: 80px;
+      background: var(--bg-warm);
+      border-radius: 20px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      border: 1px solid var(--border-light);
+    }
+
+    .contact-modal-header h3 {
+      margin-bottom: 5px;
+      color: var(--text-dark);
+    }
+
+    .contact-modal-header p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+
+    .contact-info-item {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .whatsapp-btn:hover {
+      background: #20BA5A;
+      transform: translateY(-2px);
+    }
+
+    /* ---------- Event Modal Admin Button ---------- */
+    .emodal-admin {
+      position: absolute;
+      top: 20px;
+      right: 60px;
+      /* Position to the left of the close button */
+      background: #f5f5f5;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #666;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+
+    .emodal-admin:hover {
+      background: #eee;
+    }
+  </style>
+
+  <script>
+    function openContactModal(title, phone) {
+      document.getElementById('cModalTitle').textContent = title + ' Contact';
+      document.getElementById('cModalPhone').textContent = phone;
+      document.getElementById('contactModal').classList.add('active');
+    }
+    function closeContactModal() {
+      document.getElementById('contactModal').classList.remove('active');
+    }
+    // Handle Esc key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeContactModal();
+    });
+  </script>
+
+  <script src="shared.js"></script>
+  <script>
+    /* ── Preloader ────────────────────────────────────────────── */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const pl = document.getElementById('preloader');
+        if (pl) pl.classList.add('exit');
+      }, 1800);
+    });
+
+    /* ── Custom Cursor ─────────────────────────────────────────── */
+    (function () {
+      const dot = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      if (!dot || !ring) return;
+      let mx = -200, my = -200, rx = -200, ry = -200;
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+        dot.classList.add('visible'); ring.classList.add('visible');
+        document.body.classList.add('custom-cursor-active');
+      });
+      (function animRing() {
+        rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        requestAnimationFrame(animRing);
+      })();
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => { dot.classList.add('active'); ring.classList.add('active'); });
+        el.addEventListener('mouseleave', () => { dot.classList.remove('active'); ring.classList.remove('active'); });
+      });
+    })();
+
+    /* ── Event detail data ───────────────────────────────────── */
+    const EVENT_DATA = {
+      'project-expo': {
+        icon: '🧑‍💻', name: 'Project Expo', tag: 'Team of 2 or 3', cat: '',
+        desc: 'A premier technical exhibition! Bridge theory and real-world application by demonstrating working models and impactful engineering solutions in core ECE domains.',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Format</div>
+            <ul class="emodal-list">
+              <li>Team Structure: <strong>Individual or Team (2 or 3 members)</strong></li>
+              <li><strong>Project Requirement:</strong> Must present a working model or prototype related to core ECE domains.</li>
+              <li><strong>Presentation:</strong> Allotted a designated time slot to explain the concept, demonstrate functionality, and respond to the judging panel.</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🌐 Domains</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li>Projects from all core domains of Electronics and Communication Engineering (ECE) are welcomed. Interdisciplinary projects from allied fields such as Electrical and Electronics Engineering (EEE), Mechatronics, and Computer Science Engineering (CSE) are also encouraged, especially those involving electronics, embedded systems, IoT, robotics, and hardware–software integrated solutions.</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Evaluation & Rewards</div>
+            <ul class="emodal-list">
+              <li>Judged on innovation, originality, technical depth, practical feasibility, clarity of presentation, and real-world impact.</li>
+              <li>Projects securing the highest overall scores will be awarded First, Second, and Third prizes!</li>
+            </ul>
+          </div>`
+      },
+      'idea-forge': {
+        icon: '🌐', name: 'Idea Forge', tag: 'Team of 2 or 3', cat: '',
+        desc: 'A technical paper presentation competition. Showcase innovative ideas, research perspectives, and domain expertise. Cultivate research thinking and professional communication skills!',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Format</div>
+            <ul class="emodal-list">
+              <li>Team Structure: <strong>Individual or Team (2 or 3 members)</strong></li>
+              <li><strong>Duration:</strong> 10 minutes for presentation + 2-3 minutes for Q&A.</li>
+              <li><strong>Submission:</strong> May be required to submit an abstract or full paper prior to the event for preliminary review.</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🌐 Technical Domains</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li>Embedded Systems and IoT Systems</li>
+              <li>Emerging Technologies</li>
+              <li>Biomedical Engineering</li>
+              <li>Artificial Intelligence</li>
+              <li>Electric Vehicle Technology</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Evaluation & Rewards</div>
+            <ul class="emodal-list">
+              <li>Evaluated on technical depth, innovation, clarity of structure, practical applicability, and confidence in the Q&A round.</li>
+              <li>Top presenters will be recognized for their research excellence and will receive First, Second, and Third prizes!</li>
+            </ul>
+          </div>`
+      },
+      'tazky-among-uz': {
+        icon: '🤖', name: 'Tazky Among Uz', tag: 'Team of 2 or 3', cat: '',
+        desc: 'A fast-paced, multi-stage team competition blending quiz rounds with practical challenges. Test your speed, accuracy, teamwork, and strategic thinking under pressure!',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">📊 General Scoring Rules</div>
+            <ul class="emodal-list">
+              <li><strong>Starting Points:</strong> 10</li>
+              <li><strong>Correct Answer:</strong> +1 point | <strong>Wrong Answer:</strong> -1 point</li>
+              <li><strong>Task Completed:</strong> +2 points</li>
+              <li><strong>Task Not Completed:</strong> -2 points <em>(applicable depending on round rules)</em></li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🏆 Competition Structure</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li><strong>Round 1: Foundation Round</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Format: Quiz + Challenge Task. <em>Special Rule: No deductive points for tasks not completed! Build your score without penalty.</em></span>
+              </li>
+              <li><strong>Round 2: Penalty Round</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Format: Quiz + Challenge Task. <em>Special Rule: A deduction of -2 points applies for any task not completed. Demands careful strategy and accuracy!</em></span>
+              </li>
+              <li><strong>Round 3: Buzzer Round</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Format: Rapid-Fire Buzzer Round. <em>Special Rule: First to press gets to answer. +1 for correct, -1 for wrong. Quick thinking is essential here!</em></span>
+              </li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Judging & Rewards</div>
+            <ul class="emodal-list">
+              <li>The team with the highest cumulative score across all three rounds will be declared the Winner.</li>
+              <li>Winning teams receive prizes & rewards for their exceptional performance and teamwork!</li>
+            </ul>
+          </div>`
+      },
+      'currentclash': {
+        icon: '📊', name: 'CurrentClash', tag: 'Team of 2 or 3', cat: '',
+        desc: 'Identify and rectify errors in electronic circuit diagrams! Demonstrate strong conceptual understanding and analytical precision in this competitive technical event.',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Format</div>
+            <ul class="emodal-list">
+              <li>Team Structure: <strong>Team of 2 or 3 members</strong></li>
+              <li><strong>Materials Provided:</strong> All necessary materials, including question booklets and writing instruments, will be provided.</li>
+              <li>⚠️ <strong>Strictly Prohibited:</strong> External tools, calculators, mobile phones, or digital devices are not allowed.</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🏆 Competition Structure</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li><strong>Round 1: Fundamentals (30 mins)</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Multiple Choice Questions (MCQs) based on basic circuit diagrams containing elementary errors.</span>
+              </li>
+              <li><strong>Round 2: Advanced Analysis (45 mins)</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Advanced MCQs featuring complex circuit diagrams with subtle and challenging errors requiring deeper analytical reasoning.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Judging & Rewards</div>
+            <ul class="emodal-list">
+              <li>The final score is calculated by combining marks from both rounds.</li>
+              <li>The team securing the highest cumulative score will be declared the winner and awarded prizes!</li>
+            </ul>
+          </div>`
+      },
+      'clever-hunt': {
+        icon: '🔐', name: 'Clever Hunt', tag: 'Team of 2 or 3', cat: '',
+        desc: 'Think • Link • Sync! A dynamic technical puzzle competition that challenges you to decode linked riddles through logic, coordination, and strategic thinking.',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Concept</div>
+            <ul class="emodal-list">
+              <li>Team Structure: <strong>Team of 2 or 3 members</strong></li>
+              <li><strong>The Core Concept:</strong> Teams receive 3 jumbled technical riddles. The last word of one connects logically with the first word of another, forming a hidden chain!</li>
+              <li><strong>Objective:</strong> Correctly arrange the riddles in sequence to uncover and solve the final hidden puzzle. Only accurate linking unlocks the solution!</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🏆 Competition Structure</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li><strong>Round 1: Linking Round</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Arrange a set of jumbled technical riddles by linking words to reveal a hidden clue or mini-puzzle. Top teams advance!</span>
+              </li>
+              <li><strong>Round 2: Sync & Solve Round</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Qualified teams receive a complex set of riddles with intricate linking patterns. Arrange them, then solve a final master puzzle derived from the chain!</span>
+              </li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Judging & Rewards</div>
+            <ul class="emodal-list">
+              <li>Evaluated based on speed, logical accuracy, and correctness of the final solution.</li>
+              <li>The team that links the riddles and solves the puzzle in the most efficient and accurate manner wins!</li>
+            </ul>
+          </div>`
+      },
+      'bug-arena': {
+        icon: '📱', name: 'Bug Arena', tag: 'Team of 2 or 3', cat: '',
+        desc: 'A competitive technical event focused on evaluating core debugging and analytical skills. Identify and rectify errors in code snippets without the aid of a compiler!',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Format</div>
+            <ul class="emodal-list">
+              <li>Team Structure: <strong>Team of 2 or 3 members</strong></li>
+              <li><strong>Materials:</strong> Printed code snippets and writing materials will be provided.</li>
+              <li>⚠️ <strong>Strictly Prohibited:</strong> Laptops, tablets, smartphones, calculators, or any electronic devices. Compiler-free debugging!</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🏆 Competition Structure</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li><strong>Round 1: Fundamentals — Syntax & Logic (30 mins)</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Multiple Choice Questions (MCQs) based on short code segments containing common syntax and logical errors.</span>
+              </li>
+              <li><strong>Round 2: Advanced Analysis — Algorithmic & Complex Bugs (45 mins)</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Advanced MCQs featuring longer and intricate code segments involving nested logic, algorithms, and edge cases requiring careful tracing.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Judging & Rewards</div>
+            <ul class="emodal-list">
+              <li>The final score is calculated by combining marks from both rounds.</li>
+              <li>The team securing the highest cumulative score will be recognized for their analytical excellence and debugging proficiency!</li>
+            </ul>
+          </div>`
+      },
+      'upside-down': {
+        icon: '🎤', name: 'Upside Down', tag: 'Team of 2 or 3', cat: 'nt',
+        desc: 'A thrilling team game where knowledge meets luck! Everything you know is flipped. Think backwards, act fast, and conquer this topsy-turvy challenge.',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Format</div>
+            <ul class="emodal-list">
+              <li><strong>The Brain (Player 1):</strong> Stays outside the grid and answers questions. Knowledge determines movement!</li>
+              <li><strong>The Walker (Player 2):</strong> Stands inside as the "human pawn," moving across squares based on dice rolls.</li>
+              <li>Played on a giant floor grid. Movement is determined by correct answers and dice rolls.</li>
+              <li>Special marked squares introduce surprise twists!</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🔄 Gameplay</div>
+            <ul class="emodal-list">
+              <li><strong>The Quiz:</strong> Organizer asks 'The Brain' a question. Correct answers unlock a dice roll.</li>
+              <li><strong>The Move:</strong> 'The Walker' moves forward based on the dice.</li>
+              <li><strong>The Twist ("?"):</strong> Landing on a "?" square means 'The Walker' must pick a random movement slot (e.g. "Move up 2 rows", "Go back to square 5") and follow it immediately!</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Official Rules</div>
+            <ul class="emodal-list">
+              <li><strong>No Stepping Out:</strong> The Walker must stay within the grid boundaries at all times.</li>
+              <li><strong>No Coaching:</strong> The Walker cannot assist The Brain in answering questions.</li>
+              <li><strong>"?" Mandate is Final:</strong> Must be followed even if it moves you backward.</li>
+              <li><strong>The Goal:</strong> The first Walker to land on or pass the finish line wins!</li>
+            </ul>
+          </div>`
+      },
+      'mindfusion': {
+        icon: '🎨', name: 'Mindfusion', tag: 'Team of 2 or 3', cat: 'nt',
+        desc: 'A fun and fast-paced IQ challenge that tests your observation, thinking speed, and teamwork. Stay sharp and score high to win!',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Format</div>
+            <ul class="emodal-list">
+              <li>Team Structure: <strong>Team of 2 or 3 members</strong></li>
+              <li>Event comprises <strong>3 progressive levels</strong></li>
+              <li>Quiz-style format using a <strong>buzzer system</strong></li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🏆 Competition Levels</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li><strong>Level 1: Puzzles and Word Games</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Evaluate logical reasoning, vocabulary, and quick thinking. Hit the buzzer to answer a displayed puzzle!</span>
+              </li>
+              <li><strong>Level 2: Guess the Famous Personality</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Test visual interpretation and GK. Hit the buzzer to identify the personality from images and emojis!</span>
+              </li>
+              <li><strong>Level 3: Video-Based Rapid Response</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Assess attentiveness and memory. Watch a short video, hit the buzzer, and answer questions based on the clip!</span>
+              </li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Judging & Rewards</div>
+            <ul class="emodal-list">
+              <li>Judged on accuracy, speed, observation, coordination, and total points.</li>
+              <li>Top 3 teams with highest overall scores win First, Second, and Third prizes!</li>
+            </ul>
+          </div>`
+      },
+      'unmuted': {
+        icon: '🎮', name: 'Unmuted', tag: 'Team of 2 or 3', cat: 'nt',
+        desc: 'An exciting communication challenge that brings out your confidence and speaking power. Showcase your debating skills, quick thinking, and teamwork on stage.',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Format</div>
+            <ul class="emodal-list">
+              <li>Team Structure: <strong>Team of 2 or 3 members</strong></li>
+              <li>Wait for it... <strong>Teammates will be decided by the organizers!</strong></li>
+              <li>Event comprises <strong>3 progressive levels</strong></li>
+              <li>Teams get exactly <strong>3 minutes</strong> for preparation in each level before presenting.</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🏆 Competition Levels</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li><strong>Level 1: Debate</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Spontaneous thinking and argumentative skills! Topic given on the spot. Two teams debate, the winner advances.</span>
+              </li>
+              <li><strong>Level 2: Problem Solving</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Analytical thinking! Receive a problem statement, discuss, and present a clear, well-structured speech explaining your solution.</span>
+              </li>
+              <li><strong>Level 3: Chain Talk</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Coordination and fluency! Members must speak continuously one after another without interruption. When the buzzer rings, the round ends.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Judging & Rewards</div>
+            <ul class="emodal-list">
+              <li>Judged on communication flow, confidence, coordination, and creativity.</li>
+              <li>Top 3 teams in the final level will be awarded First, Second, and Third prizes!</li>
+            </ul>
+          </div>`
+      },
+      'ideart': {
+        icon: '📸', name: 'IdeArt – Frame & Fame', tag: 'Team of 2 or 3', cat: 'nt',
+        desc: 'A creative photography and poster design competition! Capture the best moments of AURCM and turn your original photo into an eye-catching promotional poster.',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">👥 Participation & Format</div>
+            <ul class="emodal-list">
+              <li>Team Structure: <strong>Team of 2 or 3 members</strong></li>
+              <li>Only <strong>Canva</strong> and <strong>Lightroom</strong> are permitted for editing and poster design.</li>
+              <li>⚠️ <strong>Strictly NO AI:</strong> Use of AI tools or AI-generated content is prohibited.</li>
+              <li><strong>Original Photos Only:</strong> Must use a photograph captured <em>during</em> the event. No pre-captured images allowed!</li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🏆 Competition Structure</div>
+            <ul class="emodal-list" style="margin-bottom: 12px;">
+              <li><strong>Creative Execution Round (60–90 mins)</strong><br>
+                  <span style="font-size:0.85rem;color:var(--text-secondary);">Capture an on-the-spot photograph of the college campus (AURCM) and transform it into a promotional poster advertising the college.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">⚖️ Judging & Rewards</div>
+            <ul class="emodal-list">
+              <li>Judged on composition, editing quality, design aesthetics, and promotional impact.</li>
+              <li>Top 3 entries with the highest organizer votes will win First, Second, and Third prizes!</li>
+            </ul>
+          </div>`
+      },
+      'chess': {
+        icon: '♟️', name: 'Chess Tournament', tag: 'Individual', cat: 'sp',
+        desc: 'Battle of minds in a fast-paced Blitz Chess tournament! Outsmart opponents in timed duels. Limited slots — secure yours now!',
+        body: `
+          <div class="emodal-section">
+            <div class="emodal-section-title">🕒 Format</div>
+            <ul class="emodal-list">
+              <li>⏱ <strong>5-Minute Blitz Timer</strong> — 5 minutes per player</li>
+              <li>💰 Entry Fee: <strong>₹30 per player</strong></li>
+              <li>🔢 <strong>Limited slots only</strong> — register early!</li>
+              <li>♟ <strong>own Chess Boards are permitted</strong></li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">♟️ Rules</div>
+            <ul class="emodal-list">
+              <li>Standard chess rules apply</li>
+              <li><strong>Touch-move rule</strong> strictly followed</li>
+              <li>⚠️ <strong>Two illegal moves = Immediate Loss</strong></li>
+              <li>Players must handle the timer after every move</li>
+              <li>Bye rule applied — a volunteer may play the extra player if accepted</li>
+              <li>🎲 Matchmaking is <strong>random by computer</strong></li>
+            </ul>
+          </div>
+          <div class="emodal-section">
+            <div class="emodal-section-title">🔄 Tournament Pattern</div>
+            <ul class="emodal-list">
+              <li>🏆 <strong>Elimination Format</strong></li>
+            </ul>
+          </div>`
+      },
+    };
+
+    /* ── Open modal ──────────────────────────────────────────── */
+    function openEventModal(id, fetchLive = false) {
+      const d = EVENT_DATA[id]; if (!d) return;
+      document.getElementById('eModalIcon').textContent = d.icon;
+      document.getElementById('eModalTitle').textContent = d.name;
+      document.getElementById('eModalDesc').textContent = d.desc;
+      const tag = document.getElementById('eModalTag');
+      tag.textContent = d.tag;
+      tag.className = 'emodal-tag' + (d.cat ? ' ' + d.cat : '');
+      const hl = document.getElementById('eModalHighlights');
+      if (d.body) {
+        hl.innerHTML = d.body;
+      } else {
+        hl.innerHTML = d.highlights.map(([ico, txt]) =>
+          `<div class="emodal-highlight-item"><span>${ico}</span>${txt}</div>`
+        ).join('');
+      }
+
+      const adminBtn = document.getElementById('eModalAdminBtn');
+      if (adminBtn) {
+        if (id === 'chess' || id === 'idea-forge') {
+          adminBtn.style.display = 'flex';
+          adminBtn.dataset.eventId = id;
+        } else {
+          adminBtn.style.display = 'none';
+        }
+      }
+
+      // Hide Register button for Live Chess/Ideaforge view
+      const regBtn = document.getElementById('eModalRegisterBtn');
+      if (regBtn) {
+        if ((id === 'chess' || id === 'idea-forge') && fetchLive) {
+          regBtn.style.display = 'none';
+        } else {
+          regBtn.style.display = '';
+        }
+      }
+
+      document.getElementById('eventModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      // Live Ideaforge Tournament Data Fetch
+      if (id === 'idea-forge' && fetchLive) {
+        fetchIdeaForgeLive(hl);
+      }
+    }
+
+    async function fetchIdeaForgeLive(hlNode) {
+      // Show loading state
+      hlNode.innerHTML = `
+            <div style="text-align:center; padding: 40px 20px;">
+                <div class="loader-spinner" style="margin: 0 auto 15px;"></div>
+                <div style="font-weight:600; color:var(--text-muted); font-size: 0.9rem;">Fetching Live Participants...</div>
+                <style>
+                    .loader-spinner { width:34px; height:34px; border:3px solid #f3f3f3; border-top:3px solid var(--emirates-red); border-radius:50%; animation:spin 1s linear infinite; }
+                    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+                </style>
+            </div>
+        `;
+
+      // Helper to wait for DB
+      async function waitForDb(cb, n=25) {
+        if(window.db) cb();
+        else if(n > 0) setTimeout(() => waitForDb(cb, n-1), 200);
+        else hlNode.innerHTML = `<div style="text-align:center;padding:20px;color:var(--emirates-red);">Database connection timed out.</div>`;
+      }
+
+      // Render the leaderboard from a Firestore snapshot
+      function renderIdeaForgeLeaderboard(snap) {
+        let participants = [];
+        const normalize = (s) => (s || '').toString().toLowerCase().replace(/[^a-z0-9]/g, '').trim();
+        const targetEvent = 'ideaforge';
+
+        snap.forEach(doc => {
+          const data = doc.data();
+          let matched = false;
+          if (normalize(data.event) === targetEvent) matched = true;
+          if (!matched && Array.isArray(data.events)) {
+            if (data.events.some(ev => normalize(ev.event || ev) === targetEvent)) matched = true;
+          }
+          // Show all IdeaForge registrants (no payment filter — let admin control via scoring)
+          if (matched) {
+            participants.push({
+              id: doc.id,
+              name: data.name || data.regId || 'Anonymous',
+              regId: data.regId,
+              teamMembers: data.teamMembers || [],
+              teamMembersByEvent: data.teamMembersByEvent || {},
+              points: (data.ideaForgeMeta && data.ideaForgeMeta.points) ? parseInt(data.ideaForgeMeta.points) : 0,
+              order: (data.ideaForgeMeta && data.ideaForgeMeta.order) ? parseInt(data.ideaForgeMeta.order) : 99999,
+              locked: data.ideaForgeMeta && data.ideaForgeMeta.locked
+            });
+          }
+        });
+
+        if (participants.length === 0) {
+          hlNode.innerHTML = `<div style="text-align:center; padding: 30px; font-weight:600; color:var(--text-muted);">No participants have been confirmed for Ideaforge yet.</div>`;
+          return;
+        }
+
+        participants.sort((a, b) => {
+          // Locked/ordered participants first; then sort by points descending
+          if (a.order !== b.order) return a.order - b.order;
+          return b.points - a.points;
+        });
+
+        const now = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        let html = `
+          <div style="margin-top:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div style="font-size:0.85rem; font-weight:700; color:var(--emirates-red); text-transform:uppercase; letter-spacing:0.05em;">Ideaforge Live Leaderboard</div>
+              <div style="font-size:0.72rem; color:var(--text-muted);">🔴 LIVE · Updated ${now}</div>
+            </div>
+            <div style="overflow-x:auto;">
+              <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+                <thead>
+                  <tr style="border-bottom:2px solid #eee; text-align:left;">
+                    <th style="padding:10px 5px; color:var(--text-muted); font-size:0.75rem;">RANK</th>
+                    <th style="padding:10px 5px; color:var(--text-muted); font-size:0.75rem;">TEAM / PARTICIPANTS</th>
+                    <th style="padding:10px 5px; color:var(--text-muted); font-size:0.75rem; text-align:right;">POINTS</th>
+                  </tr>
+                </thead>
+                <tbody>`;
+
+        participants.forEach((p, i) => {
+          const isTop3 = i < 3;
+          const medal = i === 0 ? '🥇' : (i === 1 ? '🥈' : (i === 2 ? '🥉' : ''));
+          const rowBg = isTop3 ? 'rgba(200, 169, 81, 0.05)' : 'transparent';
+          const ifData = p.teamMembersByEvent ? p.teamMembersByEvent['Idea Forge'] : null;
+          const teamName = ifData ? ifData.teamName : '';
+          let membersArr = [];
+          
+          if (ifData && ifData.members && Array.isArray(ifData.members)) {
+            membersArr = ifData.members.map(m => m.name);
+          } else if (p.teamMembers && p.teamMembers.length > 0) {
+            membersArr = p.teamMembers.map(m => m.name);
+          }
+
+          const teamStr = (teamName || membersArr.length > 0)
+            ? `<div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;"><strong>${teamName ? 'Team: ' + teamName : 'Team Details'}:</strong> ${membersArr.join(', ')}</div>`
+            : `<div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;"><strong>Individual Participation</strong></div>`;
+          const pointsColor = p.points > 0 ? 'var(--emirates-red)' : 'var(--text-muted)';
+
+          html += `
+                <tr style="border-bottom:1px solid #f5f5f5; background:${rowBg};">
+                  <td style="padding:12px 5px; font-weight:800; color:${isTop3 ? 'var(--gold-dark)' : '#666'};">${medal || (i + 1)}</td>
+                  <td style="padding:12px 5px;">
+                    <div style="font-weight:700; color:var(--text-dark);">${p.name} <span style="font-weight:400; font-size:0.8rem; color:var(--text-muted);">(${p.regId})</span></div>
+                    ${teamStr}
+                  </td>
+                  <td style="padding:12px 5px; text-align:right; font-family:monospace; font-weight:700; font-size:1.1rem; color:${pointsColor};">${p.points}</td>
+                </tr>`;
+        });
+
+        html += `
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:15px; font-style:italic; text-align:center;">📊 Scores update automatically in real-time.</p>
+          </div>`;
+        hlNode.innerHTML = html;
+      }
+
+      // Use real-time onSnapshot instead of get() so leaderboard updates live
+      waitForDb(() => {
+        try {
+          const unsub = window.db.collection('registrations').onSnapshot(snap => {
+            renderIdeaForgeLeaderboard(snap);
+          }, err => {
+            console.error("fetchIdeaForgeLive snapshot error:", err);
+            hlNode.innerHTML = `<div style="text-align:center; padding: 30px; font-weight:600; color:var(--emirates-red);">Failed to load live scores. (Check connection)</div>`;
+          });
+          // Store unsub in case we ever need to stop listening
+          hlNode._ideaForgeUnsub = unsub;
+        } catch(e) {
+          console.error("fetchIdeaForgeLive setup error:", e);
+          hlNode.innerHTML = `<div style="text-align:center; padding: 30px; font-weight:600; color:var(--emirates-red);">Failed to initialize live scores.</div>`;
+        }
+      });
+    }
+
+    async function fetchChessLive(hlNode) {
+      // Show loading state
+      hlNode.innerHTML = `
+            <div style="text-align:center; padding: 40px 20px;">
+                <div class="loader-spinner" style="margin: 0 auto 15px;"></div>
+                <div style="font-weight:600; color:var(--text-muted); font-size: 0.9rem;">Fetching Live Tournament Status...</div>
+                <style>
+                    .loader-spinner { width:34px; height:34px; border:3px solid #f3f3f3; border-top:3px solid var(--emirates-red); border-radius:50%; animation:spin 1s linear infinite; }
+                    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+                </style>
+            </div>
+        `;
+
+      waitForDb(async () => {
+        try {
+          const docRef = window.db.collection('public_data').doc('chessLive');
+          const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 4000));
+          const snap = await Promise.race([docRef.get(), timeout]);
+
+          if (!snap.exists) {
+            hlNode.innerHTML = `<div style="text-align:center; padding: 30px; font-weight:600; color:var(--text-muted);">The tournament has not started yet.</div>`;
+            return;
+          }
+
+          const data = snap.data();
+          let html = '';
+
+          if (data.grandFinal && data.grandFinal.winner) {
+            html += `
+                  <div style="background:linear-gradient(135deg, var(--emirates-red) 0%, #1d1d1d 100%); padding:20px; border-radius:12px; margin-bottom:20px; text-align:center; color:white; box-shadow:0 8px 24px rgba(198,12,48,.2);">
+                      <div style="font-size:3rem; line-height:1; margin-bottom:8px;">🏆</div>
+                      <div style="font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; opacity:0.8; font-weight:700;">Overall Elexsiya 26 Chess Champion</div>
+                      <div style="font-size:1.6rem; font-family:var(--font-heading); font-weight:800; margin-top:4px;">${data.grandFinal.winner.name}</div>
+                      <div style="font-size:0.85rem; opacity:0.8; margin-top:4px;">${data.grandFinal.winner.regId}</div>
+                  </div>`;
+          }
+
+          const renderGroup = (gData, title, color) => {
+            let gHtml = `<div style="margin-bottom: 24px;">
+                      <div style="font-size:1.05rem; font-weight:800; color:${color}; margin-bottom: 12px; display:flex; align-items:center; gap:8px;">
+                          <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:${color};"></span>
+                          ${title}
+                      </div>`;
+            if (gData.champion) {
+              gHtml += `
+                      <div style="background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:8px; padding:14px; text-align:center; margin-bottom:12px;">
+                          <span style="font-size:1.5rem;">🥇</span>
+                          <div style="font-weight:700; font-size:1.1rem; color:var(--text-dark); margin-top:4px;">${gData.champion.name}</div>
+                          <div style="font-size:0.75rem; color:var(--text-muted);">${gData.champion.regId !== 'Volunteer' ? gData.champion.regId : 'Volunteer'}</div>
+                      </div>`;
+            } else if (gData.boards && gData.boards.length > 0) {
+              gHtml += `<div style="font-size:0.8rem; font-weight:700; color:var(--text-muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:0.05em;">Round ${gData.round} Active Boards</div>`;
+              gData.boards.forEach((b, i) => {
+                const p1n = b.p1 ? b.p1.name : "—";
+                const p2n = b.p2 ? b.p2.name : "Waiting/Bye";
+                let p1Style = "flex:1; text-align:center; padding:8px 4px; font-weight:600; font-size:0.9rem;";
+                let p2Style = "flex:1; text-align:center; padding:8px 4px; font-weight:600; font-size:0.9rem;";
+                if (b.winner) {
+                  if (b.winner.name === p1n) {
+                    p1Style += " background:#f0fdf4; color:#16a34a; border-radius:6px;";
+                    p2Style += " opacity:0.4; text-decoration:line-through;";
+                  } else if (b.winner.name === p2n) {
+                    p2Style += " background:#f0fdf4; color:#16a34a; border-radius:6px;";
+                    p1Style += " opacity:0.4; text-decoration:line-through;";
+                  }
+                }
+                gHtml += `
+                          <div style="display:flex; align-items:center; padding:10px; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:8px; background:white;">
+                              <div style="width:28px; height:28px; background:#f1f5f9; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:#64748b; margin-right:10px;">${i + 1}</div>
+                              <div style="${p1Style}">${p1n}</div>
+                              <div style="font-size:0.7rem; font-weight:800; color:var(--emirates-red); padding:0 10px;">VS</div>
+                              <div style="${p2Style}">${p2n}</div>
+                          </div>`;
+              });
+            } else {
+              gHtml += `<div style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">No active matches.</div>`;
+            }
+            gHtml += `</div>`;
+            return gHtml;
+          };
+
+          if (data.a) html += renderGroup(data.a, "Group A (Registered)", "var(--emirates-red)");
+          if (data.b) html += renderGroup(data.b, "Group B (Late Entry)", "#2563eb");
+          hlNode.innerHTML = html || `<div style="text-align:center; padding: 30px; font-weight:600; color:var(--text-muted);">The tournament is currently idle.</div>`;
+
+        } catch (e) {
+          console.error("fetchChessLive error:", e);
+          hlNode.innerHTML = `<div style="text-align:center; padding: 30px; color:var(--emirates-red); font-weight:600;">Error fetching live data. Please try again later.</div>`;
+        }
+      });
+    }
+
+    /* ── Handle Event Admin Click ────────────────────────────── */
+    function openEventAdmin() {
+      const btn = document.getElementById('eModalAdminBtn');
+      const eventId = btn.dataset.eventId;
+      if (eventId === 'chess') {
+        window.location.href = 'chess_admin_login.html';
+      } else if (eventId === 'idea-forge') {
+        window.location.href = 'ideaforge_admin_login.html';
+      } else {
+        window.location.href = 'admin.html';
+      }
+    }
+
+    /* ── Close modal ─────────────────────────────────────────── */
+    function closeEventModal() {
+      document.getElementById('eventModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeEventModal(); });
+
+    /* ── Hero Countdown ───────────────────────────────────────── */
+    (function () {
+      const TARGET = new Date('2026-03-27T09:00:00+05:30').getTime();
+      const els = {
+        d: document.getElementById('hcDays'),
+        h: document.getElementById('hcHours'),
+        m: document.getElementById('hcMins'),
+        s: document.getElementById('hcSecs'),
+      };
+      function pad(n) { return String(n).padStart(2, '0'); }
+      function animFlip(el, val) {
+        const v = pad(val);
+        if (el.textContent === v) return;
+        el.style.animation = 'none';
+        el.offsetHeight;
+        el.textContent = v;
+        el.style.animation = 'cdFlip .25s ease both';
+      }
+      function tick() {
+        const diff = TARGET - Date.now();
+        if (diff <= 0) {
+          ['d', 'h', 'm', 's'].forEach(k => els[k].textContent = '00');
+          return;
+        }
+        const s = Math.floor(diff / 1000);
+        animFlip(els.d, Math.floor(s / 86400));
+        animFlip(els.h, Math.floor((s % 86400) / 3600));
+        animFlip(els.m, Math.floor((s % 3600) / 60));
+        animFlip(els.s, s % 60);
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+    function toggleBusRoutes() {
+      const content = document.getElementById('busRoutesContent');
+      const btn = document.getElementById('viewRoutesBtn');
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        btn.innerHTML = '<span>🚌</span> Hide Bus Routes';
+        // Auto-hide timings if open
+        const timings = document.getElementById('busTimingsContent');
+        if (timings && timings.style.display === 'block') toggleBusTimings();
+      } else {
+        content.style.display = 'none';
+        btn.innerHTML = '<span>🚌</span> View Bus Routes';
+      }
+    }
+
+    function toggleBusTimings() {
+      const content = document.getElementById('busTimingsContent');
+      const btn = document.getElementById('viewTimingsBtn');
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        btn.innerHTML = '<span>🚌</span> Hide Bus Number and Timing';
+        // Auto-hide routes if open
+        const routes = document.getElementById('busRoutesContent');
+        if (routes && routes.style.display === 'block') toggleBusRoutes();
+      } else {
+        content.style.display = 'none';
+        btn.innerHTML = '<span>🚌</span> View Bus Number and Timing';
+      }
+    }
+    /* ── Transport UX Script ──────────────────────────────────────── */
+    const BUS_DIRECTIONS_TEXT = `*Elexsiya 26 - Bus Route Directions* 🚌\n\n*From Aarapalayam:*\n1. Take Bus 48AD to Thirumangalam.\n2. Get down at Thirunagar 3rd Stop.\n3. Take an auto to Anna University Regional Campus.\n\n*From Periyar Bus Stand:*\n1. Take Bus 48 to Thirumangalam.\n2. Get down at Thirunagar 3rd Stop.\n3. Take an auto to Anna University Regional Campus.\n\n*From Thirumangalam:*\nOption 1: Take Bus 48UT direct to Anna University (Timing: 8:10 AM - 8:20 AM only)\nOption 2: Take any bus to Thirunagar 3rd Stop, then take an auto to Anna University Regional Campus.\n\n📍 *Venue Link:* https://maps.app.goo.gl/o1bZ6KWe22m9qgY47`;
+
+    function shareBusRoutes() {
+      const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(BUS_DIRECTIONS_TEXT)}`;
+      window.open(url, '_blank');
+    }
+
+    function copyBusRoutes() {
+      navigator.clipboard.writeText(BUS_DIRECTIONS_TEXT).then(() => {
+        const btn = document.getElementById('copyRoutesBtn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span>✅</span> Copied!';
+        setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+      }).catch(err => {
+        alert('Failed to copy: ' + err);
+      });
+    }
+
+    function openLiveMaps() {
+      if (navigator.geolocation) {
+        // Show loading state
+        const btn = document.querySelector('button[onclick="openLiveMaps()"]');
+        const origHtml = btn.innerHTML;
+        btn.innerHTML = '<span>⏳</span> Locating...';
+
+        navigator.geolocation.getCurrentPosition(
+          // Success
+          (position) => {
+            btn.innerHTML = origHtml;
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const dest = "Anna+University+Regional+Campus+Madurai";
+            const url = `https://www.google.com/maps/dir/?api=1&origin=${lat},${lng}&destination=${dest}`;
+            window.open(url, '_blank');
+          },
+          // Error
+          (error) => {
+            btn.innerHTML = origHtml;
+            alert('Could not get your location. Opening default directions instead.');
+            window.open('https://www.google.com/maps/dir/?api=1&destination=Anna+University+Regional+Campus+Madurai', '_blank');
+          },
+          // Options
+          { timeout: 10000 }
+        );
+      } else {
+        alert('Geolocation is not supported by your browser.');
+        window.open('https://www.google.com/maps/dir/?api=1&destination=Anna+University+Regional+Campus+Madurai', '_blank');
+      }
+    }
+
+    /* ── Floating WhatsApp Chat ───────────────────────────────────── */
+    function openWhatsAppSupport() {
+      // Direct link to the support number (+91 9342478364)
+      const url = `https://api.whatsapp.com/send?phone=919342478364&text=${encodeURIComponent("Hi Elexsiya Team! I have a question regarding the symposium.")}`;
+      window.open(url, '_blank');
+    }
+
+  </script>
+
+  <!-- Floating WhatsApp Button -->
+  <button class="floating-wa-btn" onclick="openWhatsAppSupport()" aria-label="Chat with us on WhatsApp">
+    <div class="floating-wa-icon">&#128172;</div>
+    <div class="floating-wa-tooltip">Need Help? Chat with us!</div>
+  </button>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top">
+    <span class="scroll-arrow-up"></span>
+  </button>
+
+  <script>
+    /* ── Scroll to Top Logic ──────────────────────────────────────── */
+    const scrollTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.addEventListener("scroll", () => {
+      if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+        scrollTopBtn.classList.add("show");
+      } else {
+        scrollTopBtn.classList.remove("show");
+      }
+    });
+
+    scrollTopBtn.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  </script>
+
+  <!-- Firebase SDK — defer so it doesn't block page rendering -->
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script defer src="firebase-config.js"></script>
+  <script defer>
+    // ── Dynamic Site Config (CMS) ──
+    (function loadPublicConfig() {
+      // Wait for Firebase readiness
+      const waitForDb = (cb, n=25) => {
+        if(window.db) cb();
+        else if(n > 0) setTimeout(() => waitForDb(cb, n-1), 200);
+        else console.warn("[CMS] Database not ready after 5s.");
+      };
+
+      waitForDb(async () => {
+        try {
+          const fetchOp = window.db.collection('settings').doc('publicConfig').get();
+          const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 4000));
+          const doc = await Promise.race([fetchOp, timeout]);
+          
+          if (doc.exists) {
+            const data = doc.data();
+            
+            // 1. Maintenance Mode
+            if (data.maintenanceMode === true) {
+              const overlay = document.createElement('div');
+              overlay.id = 'maintenanceOverlay';
+              overlay.innerHTML = `
+                <div style="position:fixed;inset:0;z-index:999999;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 50%,#0a0a0a 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;color:white;text-align:center;padding:40px;">
+                  <div style="font-size:4rem;margin-bottom:20px;">🔧</div>
+                  <h1 style="font-family:'Cinzel',serif;font-size:2rem;margin-bottom:16px;color:#ffd700;">Under Maintenance</h1>
+                  <p style="font-size:1.1rem;color:rgba(255,255,255,0.8);max-width:500px;line-height:1.6;">We are performing scheduled updates. Please check back soon!</p>
+                  <p style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-top:30px;">— Team Elexsiya</p>
+                </div>`;
+              document.body.innerHTML = '';
+              document.body.appendChild(overlay);
+              return; // stop execution if maintenance is on
+            }
+
+            // 2. Marquee Updates
+            if (data.marqueeText) {
+              const track = document.querySelector('.marquee-track');
+              if (track) {
+                const announcement = `<span style="color:#ffd700;font-weight:800;">📢 ${data.marqueeText}</span><span class="marquee-dot">✦</span>`;
+                track.insertAdjacentHTML('afterbegin', announcement);
+              }
+            }
+
+            // 3. Prize Pool Updates
+            if (data.prizePoolText) {
+              const stats = document.querySelectorAll('.strip-stat-value');
+              if (stats.length > 1) {
+                stats[1].textContent = data.prizePoolText;
+              }
+            }
+          }
+        } catch (e) { console.warn('Public config load failed:', e); }
+      });
+
+      // --- Timeline Live Listener ---
+      waitForDb(() => {
+        window.db.collection("settings").doc("timeline").onSnapshot((snapshot) => {
+          try {
+            if (snapshot.exists) {
+              const data = snapshot.data();
+              const activeIds = data.activeEventIds || [];
+              
+              // 1. Remove live class from all
+              document.querySelectorAll('.timeline-content').forEach(el => {
+                el.classList.remove('is-live');
+              });
+
+              // 2. Add to all active ones
+              if (Array.isArray(activeIds)) {
+                activeIds.forEach(id => {
+                  const target = document.getElementById(`event-${id}`);
+                  if (target) {
+                    target.classList.add('is-live');
+                  }
+                });
+              } else if (activeIds) { // Fallback for old single string format if any
+                const target = document.getElementById(`event-${activeIds}`);
+                if (target) target.classList.add('is-live');
+              }
+            }
+          } catch (e) {
+            console.error('Timeline feedback failed:', e);
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>

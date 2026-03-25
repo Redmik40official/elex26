@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Allow read/write for standard collections during the event
+    // In production, these should be locked to Cloud Functions or Auth.
+    match /registrations/{document=**} {
+      // Anyone can read registrations (needed for existing duplicate checks and admin dash)
+      allow read: if true;
+      
+      // Allow creation ONLY if paymentStatus is Pending and amount is non-negative
+      allow create: if request.resource.data.get('paymentStatus', '') == 'Pending' 
+                    && request.resource.data.get('amount', 0) >= 0;
+      
+      // WARNING: Since Cloud Functions are unavailable on the Spark Plan, 
+      // these must remain open so the Admin Dashboard can perform deletions and payment toggles.
+      allow update, delete: if true;
+    }
+    match /screenshots/{document=**} {
+      allow read, write: if true;
+    }
+    match /sponsorships/{document=**} {
+      allow read, write: if true;
+    }
+    match /expenditures/{document=**} {
+      allow read, write: if true;
+    }
+    match /settings/{document=**} {
+      allow read, write: if true;
+    }
+    match /site_logs/{document=**} {
+      allow read, write: if true;
+    }
+    match /feedback/{document=**} {
+      allow read, write: if true;
+    }
+
+    // 🛡️ SECURITY: Admin Audit Log is append-only
+    // Nobody can delete or modify past audit logs from the client.
+    match /admin_audit/{document=**} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if false; 
+    }
+  }
+}

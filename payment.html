@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <title>Payment – Elexsiya 26</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 20px 60px;
+      background: var(--bg-warm);
+      position: relative;
+    }
+
+    .page-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .payment-card {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 520px;
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, .05);
+      animation: fadeInUp .6s ease-out;
+      overflow-wrap: break-word;
+    }
+
+    .payment-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .payment-header h1 {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .payment-header p {
+      color: var(--text-muted);
+    }
+
+    .summary-table {
+      width: 100%;
+      margin-bottom: 32px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: var(--text-muted);
+      font-size: .95rem;
+    }
+
+    .summary-value {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .total-row {
+      background: rgba(198, 12, 48, .04);
+      border: 1px solid rgba(198, 12, 48, .12);
+      border-radius: var(--radius);
+      padding: 16px 20px !important;
+      margin-top: 8px;
+    }
+
+    .total-row .summary-value {
+      font-size: 1.3rem;
+      color: var(--emirates-red);
+      font-family: var(--font-heading);
+    }
+
+    .btn-pay {
+      width: 100%;
+      padding: 18px;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+
+    .btn-simulate {
+      width: 100%;
+      padding: 16px;
+      font-size: 1rem;
+    }
+
+    .or-divider {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .85rem;
+      margin: 12px 0;
+    }
+
+    .upi-box {
+      background: rgba(200, 169, 81, .06);
+      border: 1px solid rgba(200, 169, 81, .25);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .upi-box-label {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .upi-id {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      letter-spacing: .03em;
+      font-family: var(--font-heading);
+    }
+
+    .upi-note {
+      font-size: .78rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .upi-warn {
+      font-size: .75rem;
+      color: var(--emirates-red);
+      margin-top: 8px;
+    }
+
+    .upi-qr-container {
+      margin: 20px auto;
+      display: block;
+      width: 220px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      transition: var(--transition);
+    }
+
+    .upi-qr-container:hover {
+      border-color: var(--emirates-red);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .upi-qr-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .payment-note {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .82rem;
+      margin-top: 20px;
+      line-height: 1.65;
+    }
+
+    .no-reg {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .no-reg h2 {
+      margin-bottom: 16px;
+      color: var(--emirates-red);
+    }
+
+    .error-msg {
+      color: var(--emirates-red);
+      font-size: .8rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .has-error .error-msg {
+      display: block;
+    }
+
+    /* ── Upload Section ── */
+    .upload-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1.5px dashed var(--border-light);
+      text-align: center;
+    }
+
+    .upload-label {
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 0.95rem;
+    }
+
+    /* Hidden real file input — triggered by label */
+    #screenshotInput {
+      display: none;
+    }
+
+    .file-pick-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+      background: #f8f9fa;
+      border: 1.5px dashed var(--border-light);
+      border-radius: var(--radius);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 20px;
+      user-select: none;
+    }
+
+    .file-pick-label:hover {
+      border-color: var(--emirates-red);
+      background: rgba(198, 12, 48, 0.02);
+      color: var(--emirates-red);
+    }
+
+    .file-pick-label.has-file {
+      border-color: #16a34a;
+      border-style: solid;
+      background: rgba(22, 163, 74, 0.04);
+      color: #16a34a;
+    }
+
+    .preview-thumb {
+      max-width: 100%;
+      max-height: 180px;
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      border: 1px solid var(--border-light);
+      display: none;
+    }
+
+    .preview-thumb.visible {
+      display: block;
+      margin: 0 auto 16px;
+    }
+
+    @media (max-width: 560px) {
+      .payment-card {
+        padding: 32px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar scrolled" id="mainNav">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="logo.jpg" alt="Elexsiya 26" class="logo-img" />
+        <span class="logo-text">Elexsiya</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+      </ul>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+    <div class="payment-card" id="paymentCard">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+  <script src="firebase-config.js?v=1.1"></script>
+  <script src="shared.js?v=1.1"></script>
+  <script>
+    (async function () {
+      const card = document.getElementById('paymentCard');
+
+      card.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-muted);">&#9203; Loading your registration...</div>';
+
+      const regId = sessionStorage.getItem('currentRegId');
+      const storedData = sessionStorage.getItem('currentRegData');
+
+      if (!regId) {
+        card.innerHTML = `
+          <div class="no-reg">
+            <h2>⚠️ No Registration Found</h2>
+            <p style="color:var(--text-muted);margin-bottom:24px;">Please register first before proceeding to payment.</p>
+            <a href="register.html" class="btn btn-red">Go to Registration</a>
+          </div>`;
+        return;
+      }
+
+      let reg = null;
+
+      // 1. Try to load from optimistic local storage first (fastest, prevents 'not found' on mobile sync delay)
+      if (storedData) {
+        try {
+          reg = JSON.parse(storedData);
+        } catch (e) {
+          console.error("Failed to parse stored reg data:", e);
+        }
+      }
+
+      // 2. Fallback to Database fetch if not in sessionStorage (e.g. they refreshed the page)
+      if (!reg) {
+        const regs = await getRegistrations();
+        reg = regs.find(r => r.regId === regId);
+      }
+
+      if (!reg || reg.regId !== regId) {
+        card.innerHTML = `
+          <div class="no-reg">
+            <h2>⚠️ Registration Not Found</h2>
+            <p style="color:var(--text-muted);margin-bottom:24px;">Something went wrong or the registration is still syncing. Please wait a moment and refresh the page.</p>
+            <a href="register.html" class="btn btn-red">Register Again</a>
+            <button onclick="location.reload()" class="btn btn-red" style="margin-left:10px; background:var(--gold);">Refresh Page</button>
+          </div>`;
+        return;
+      }
+
+      card.innerHTML = `
+        <div class="payment-header">
+          <h1>💳 Payment</h1>
+          <p>Complete your registration by paying the fee</p>
+        </div>
+
+        <div class="summary-table">
+          <div class="summary-row">
+            <span class="summary-label">Registration ID</span>
+            <span class="summary-value" style="color:var(--emirates-red);font-family:var(--font-heading);">${reg.regId}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Name</span>
+            <span class="summary-value">${reg.name}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">College</span>
+            <span class="summary-value">${reg.college}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Email</span>
+            <span class="summary-value">${reg.email}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Email</span>
+            <span class="summary-value">${reg.email}</span>
+          </div>
+
+          <!-- Event Breakdown -->
+          <div style="margin: 20px 0 10px; padding-top: 15px; border-top: 1.5px dashed var(--border-light);">
+            <p style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; margin-bottom: 12px;">Selected Event Details</p>
+            ${Object.entries(reg.teamMembersByEvent || {}).map(([evName, data], i) => `
+              <div style="background: rgba(0,0,0,0.02); border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid var(--border-light);">
+                <div style="display:flex; justify-content:space-between; margin-bottom: 8px;">
+                  <span style="font-weight: 700; color: var(--emirates-red); font-size: 0.95rem;">&#127919; ${evName}</span>
+                  <span style="font-size: 0.75rem; background: var(--emirates-red); color: #fff; padding: 2px 8px; border-radius: 10px;">SECTION ${i + 1}</span>
+                </div>
+                ${data.teamName ? `<div style="font-size: 0.85rem; margin-bottom: 8px; color: var(--text-dark);"><strong>Team:</strong> ${data.teamName}</div>` : ''}
+                <div style="font-size: 0.82rem; color: var(--text-muted);">
+                  <strong>Members:</strong> ${data.members.map(m => m.name).join(', ')}
+                </div>
+                <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
+                  <strong>Accommodations:</strong> ${data.members.filter(m => m.hostel === 'Yes').length > 0
+          ? data.members.filter(m => m.hostel === 'Yes').map(m => m.name).join(', ')
+          : 'None'}
+                </div>
+              </div>
+            `).join('') || `
+              <div class="summary-row">
+                <span class="summary-label">Event</span>
+                <span class="summary-value">${reg.event || '—'}</span>
+              </div>
+            `}
+          </div>
+
+          <div class="summary-row total-row">
+            <span class="summary-label" style="font-weight:700;color:var(--text-dark);font-size:1rem;">Total Fee</span>
+            <span class="summary-value" style="font-size:1.4rem;color:var(--emirates-red);">&#8377;${reg.amount}</span>
+          </div>
+        </div>
+
+        <div class="or-divider" style="margin-top: 24px;">— Pay via UPI —</div>
+
+        <div class="upi-box">
+          <div class="upi-box-label">UPI ID</div>
+          <div class="upi-id">gunasekaran.g7111@okaxis</div>
+          
+          <div id="upiPayContainer" style="text-align:center; margin: 20px 0;">
+            <!-- QR Code for scanning or clicking -->
+            <img src="qr.jpeg" alt="GPay QR Code" class="upi-qr-img" style="display:block; margin: 0 auto; border-radius: 12px; border: 2px solid var(--border-light); padding: 8px; background: #fff;">
+            
+            <p style="font-size: 0.78rem; color: var(--text-dark); margin-top: 14px; font-weight: 600;">
+              📷 Scan QR with any UPI App to pay &#8377;${reg.amount}
+            </p>
+
+            <button onclick="navigator.clipboard.writeText('gunasekaran.g7111@okaxis').then(()=>{this.textContent='✅ Copied!';setTimeout(()=>{this.textContent='📋 Copy UPI ID';},2000);})" style="
+              margin-top: 12px;
+              background: linear-gradient(135deg, #5f259f 0%, #3d1a6e 100%);
+              color: #fff;
+              border: none;
+              padding: 10px 24px;
+              border-radius: 10px;
+              cursor: pointer;
+              font-size: 0.85rem;
+              font-weight: 600;
+              font-family: var(--font-body);
+              box-shadow: 0 4px 16px rgba(95, 37, 159, 0.25);
+              transition: transform 0.15s ease;
+            " onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform='scale(1)'">
+              📋 Copy UPI ID
+            </button>
+            <p style="font-size: 0.65rem; color: var(--text-muted); margin-top: 8px;">
+              Or copy the UPI ID and pay manually in any app
+            </p>
+          </div>
+
+          <div class="upi-note">Pay &#8377;${reg.amount} · Use Reg ID <strong style="color:var(--text-dark);">${reg.regId}</strong> as remark</div>
+        </div>
+
+        <div class="upload-section">
+          <label class="upload-label">&#128248; Upload Payment Screenshot</label>
+          <img id="previewThumb" class="preview-thumb" alt="Preview" />
+          <input type="file" id="screenshotInput" accept="image/*" />
+          <label for="screenshotInput" class="file-pick-label" id="filePickLabel">
+            &#128196; Select Payment Image
+          </label>
+          <div class="error-msg" id="uploadError" style="margin-bottom:15px;">Please select a screenshot to confirm payment</div>
+          
+          <button class="btn btn-red" id="confirmPaymentBtn" style="width:100%; padding:16px;">
+            &#10003; Upload &amp; Confirm Registration
+          </button>
+        </div>
+
+        <p class="payment-note">
+          &#128274; Payment verification is required to confirm your slot.<br/>
+          After uploading, your registration will be verified by the organizers.<br/>
+          For on-spot queries, visit the <strong>Registration Desk</strong> at the venue entrance.
+        </p>
+      `;
+
+      // (PhonePe buttons removed)
+
+      // File input handling
+      const fileInput = document.getElementById('screenshotInput');
+      const filePickLabel = document.getElementById('filePickLabel');
+      const previewThumb = document.getElementById('previewThumb');
+      const uploadError = document.getElementById('uploadError');
+
+      if (fileInput) {
+        fileInput.addEventListener('change', function (e) {
+          if (this.files && this.files[0]) {
+            const file = this.files[0];
+
+            // Client-side Validation (Vulnerability 5 Fix)
+            if (!file.type.startsWith('image/')) {
+              uploadError.textContent = 'Please select a valid image file (PNG, JPG, etc).';
+              uploadError.style.display = 'block';
+              this.value = ''; // Reset input
+              filePickLabel.classList.remove('has-file');
+              filePickLabel.innerHTML = `&#128196; Select Payment Image`;
+              previewThumb.classList.remove('visible');
+              return;
+            }
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+              uploadError.textContent = 'File is too large. Maximum size is 5MB.';
+              uploadError.style.display = 'block';
+              this.value = ''; // Reset input
+              filePickLabel.classList.remove('has-file');
+              filePickLabel.innerHTML = `&#128196; Select Payment Image`;
+              previewThumb.classList.remove('visible');
+              return;
+            }
+
+            filePickLabel.classList.add('has-file');
+            filePickLabel.innerHTML = `&#10003; ${file.name}`;
+            uploadError.style.display = 'none';
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function (ev) {
+              previewThumb.src = ev.target.result;
+              previewThumb.classList.add('visible');
+            };
+            reader.readAsDataURL(file);
+          } else {
+            filePickLabel.classList.remove('has-file');
+            filePickLabel.innerHTML = `&#128196; Select Payment Image`;
+            previewThumb.classList.remove('visible');
+          }
+        });
+      }
+
+      const confirmBtn = document.getElementById('confirmPaymentBtn');
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', async function () {
+          const file = fileInput.files[0];
+          if (!file) {
+            uploadError.textContent = 'Please select a screenshot to confirm payment';
+            uploadError.style.display = 'block';
+            return;
+          }
+
+          if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) {
+            // Should be caught by change event, but double checking
+            uploadError.textContent = 'Invalid file. Must be an image under 5MB.';
+            uploadError.style.display = 'block';
+            return;
+          }
+
+          this.disabled = true;
+          const setStatus = (msg) => { this.innerHTML = `⏳ ${msg}...`; };
+          setStatus('Processing Image');
+
+          try {
+            if (window.location.protocol === 'file:') {
+                alert("⚠️ This page is opened directly from your folder (file:// protocol).\n\nFirebase Storage cannot connect in this mode. Please use a live server (e.g. VS Code Live Server) to upload.");
+                this.disabled = false;
+                this.innerHTML = '&#10003; Upload & Confirm Registration';
+                return;
+            }
+
+            // Step 1: Processing already started in setStatus above
+            // Step 2: Uploading
+            const uploadPromise = (async () => {
+                const res = await uploadPaymentScreenshot(reg, file);
+                setStatus('Finalizing');
+                return res;
+            })();
+
+            const timeoutPromise = new Error('TIMEOUT');
+            
+            await Promise.race([
+                uploadPromise, 
+                new Promise((_, reject) => setTimeout(() => reject(timeoutPromise), 35000))
+            ]);
+            
+            sessionStorage.setItem('allowSuccessView', reg.regId);
+            window.location.href = 'success.html';
+          } catch (err) {
+            console.error("Upload failed:", err);
+            let errMsg = "❌ Upload failed. Please check your connection and try again.";
+            if (err === timeoutPromise) {
+               errMsg = "⚠️ Upload is taking too long. Please check your internet connection and try again.";
+            } else if (err.code === 'storage/unauthorized') {
+               errMsg = "⚠️ Permission Denied: Firebase Storage rules are blocking the upload.";
+            }
+            alert(errMsg);
+            this.disabled = false;
+            this.innerHTML = '&#10003; Upload & Confirm Registration';
+          }
+        });
+      }
+
+      // Robust UPI redirection
+      const upiLink = document.getElementById('upiLink');
+      if (upiLink) {
+        upiLink.addEventListener('click', function (e) {
+          console.log("UPI Link clicked:", this.href);
+        });
+      }
+
+      // ── Back-navigation button-reset fix ──
+      // Resets the button if the user presses the back button from success.html
+      function resetUploadButton() {
+        const cBtn = document.getElementById('confirmPaymentBtn');
+        if (cBtn && (cBtn.disabled || cBtn.textContent.includes('Uploading'))) {
+            cBtn.disabled = false;
+            cBtn.innerHTML = '&#10003; Upload &amp; Confirm Registration';
+        }
+      }
+
+      window.addEventListener('pageshow', function (event) {
+          if (event.persisted) resetUploadButton();
+          setTimeout(resetUploadButton, 100);
+      });
+      document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState === 'visible') resetUploadButton();
+      });
+      window.addEventListener('focus', resetUploadButton);
+      setTimeout(resetUploadButton, 0);
+
+    })();
+  </script>
+    <script>
+        // ── Dynamic Site Config (CMS) ──
+        (function loadPublicConfig() {
+            const waitForDb = (cb, n=25) => {
+                if (window.db) cb();
+                else if (n > 0) setTimeout(() => waitForDb(cb, n - 1), 200);
+            };
+            waitForDb(async () => {
+                try {
+                    const fetchOp = window.db.collection('settings').doc('publicConfig').get();
+                    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 3000));
+                    const doc = await Promise.race([fetchOp, timeout]);
+                    
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data.maintenanceMode === true) {
+                            const overlay = document.createElement('div');
+                            overlay.id = 'maintenanceOverlay';
+                            overlay.innerHTML = `
+                                <div style="position:fixed;inset:0;z-index:999999;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 50%,#0a0a0a 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;color:white;text-align:center;padding:40px;">
+                                    <div style="font-size:4rem;margin-bottom:20px;">🔧</div>
+                                    <h1 style="font-family:'Cinzel',serif;font-size:2rem;margin-bottom:16px;color:#ffd700;">Under Maintenance</h1>
+                                    <p style="font-size:1.1rem;color:rgba(255,255,255,0.8);max-width:500px;line-height:1.6;">We are performing scheduled updates. Please check back soon!</p>
+                                </div>`;
+                            document.body.innerHTML = '';
+                            document.body.appendChild(overlay);
+                        }
+                    }
+                } catch (e) { console.warn('Public config load failed:', e); }
+            });
+        })();
+    </script>
+</body>
+
+</html>
