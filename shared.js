@@ -231,6 +231,20 @@ async function addRegistration(reg) {
 
   // Vulnerability 27: Strict backend conflict checking
   const eventList = reg.events ? reg.events.map(e => e.event) : [reg.event];
+  
+  // Enforce Registration Block
+  try {
+    const closedEvents = await getClosedEvents();
+    for (const e of eventList) {
+      if (closedEvents.includes(e)) {
+        throw new Error(`Registration for "${e}" has been closed. Please remove it and try again.`);
+      }
+    }
+  } catch(e) {
+    if (e.message && e.message.includes('has been closed')) throw e;
+    console.warn('[DB] Could not check closed events:', e);
+  }
+
   if (hasTimeConflict(eventList)) {
     throw new Error("Time conflict detected between selected events. Registration rejected.");
   }
