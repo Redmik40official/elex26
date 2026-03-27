@@ -410,7 +410,11 @@ async function updateRegistrationData(regId, newData) {
  */
 async function updateCheckInStatus(regId, status) {
   try {
-    await window.db.collection('registrations').doc(regId).update({ checkedIn: status });
+    const updateData = { checkedIn: status };
+    if (status === true) {
+      updateData.checkedInAt = new Date().toISOString(); // Save actual check-in time
+    }
+    await window.db.collection('registrations').doc(regId).update(updateData);
   } catch (err) {
     console.error('[DB] updateCheckInStatus error:', err);
     throw err;
