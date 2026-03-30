@@ -126,13 +126,13 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             margin-top: 20px;
-            max-width: 800px;
+            max-width: 900px;
+            width: 100%;
         }
 
         .cert-wrapper canvas {
             display: block;
             width: 100%;
-            max-width: 1414px;
             height: auto;
         }
 
@@ -189,6 +189,14 @@
             font-size: 0.95rem;
         }
 
+        .btn-generate {
+            background: linear-gradient(135deg, #cc0000, #990000);
+            color: white;
+            box-shadow: 0 4px 20px rgba(204,0,0,0.35);
+            font-size: 1.05rem;
+            padding: 14px 32px;
+        }
+
         .btn-print {
             background: #cc0000;
             color: white;
@@ -208,8 +216,23 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
         }
+
+        /* ── Generate button banner ── */
+        #generateBanner {
+            background: white;
+            border-radius: 20px;
+            border: 2px solid rgba(204,0,0,0.15);
+            padding: 36px 40px;
+            text-align: center;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(204,0,0,0.08);
+        }
+        #generateBanner .gen-icon { font-size: 3rem; margin-bottom: 14px; }
+        #generateBanner h3 { margin: 0 0 8px; color: var(--text-dark); font-size: 1.2rem; font-family:'Cinzel', serif; }
+        #generateBanner p  { margin: 0 0 24px; color: #777; font-size: 0.9rem; line-height: 1.6; }
 
         @media print {
             body {
@@ -220,8 +243,9 @@
 
             .controls,
             .entry-pass-card,
-            .cert-pending-banner {
-                display: none;
+            .cert-pending-banner,
+            #generateBanner {
+                display: none !important;
             }
 
             .cert-wrapper {
@@ -279,6 +303,16 @@
             it.</p>
     </div>
 
+    <!-- Generate Certificate Banner (shown when cert is released but not yet drawn) -->
+    <div id="generateBanner" style="display:none;">
+        <div class="gen-icon">🎓</div>
+        <h3>Your Certificate is Ready!</h3>
+        <p>Click the button below to generate and preview your official certificate of appreciation for <strong id="genEventNames"></strong>.</p>
+        <button class="btn btn-generate" id="generateBtn" onclick="onGenerateClick()">
+            🏅 Generate My Certificate
+        </button>
+    </div>
+
     <div style="font-family: 'Cinzel'; visibility: hidden; position: absolute;">Preload</div>
     <div style="font-family: 'Montserrat'; visibility: hidden; position: absolute;">Preload</div>
     <div style="font-family: 'Poppins'; visibility: hidden; position: absolute;">Preload</div>
@@ -300,175 +334,95 @@
     <script src="shared.js"></script>
     <script>
 
-        // ── Draw the premium certificate on canvas ──
+        // ── Global state for certificate generation ──
+        let _certData = null;
+
+        // ── Draw the certificate using pp.jpeg as template ──
         async function drawCertificate(canvas, participantName, eventName, year, regId, collegeName) {
+            // Canvas dimensions matching pp.jpeg aspect ratio (landscape)
             const W = 1414, H = 1000;
-            canvas.width = W; canvas.height = H;
+            canvas.width = W;
+            canvas.height = H;
             const ctx = canvas.getContext('2d');
 
-            // 1. Load the user's Canva template
-            const loadTemplate = new Promise(resolve => {
+            // ── Load template: try Firestore upload first, then final.jpeg ──
+            let templateSrc = 'final.jpeg';
+            try {
+                // You can keep the getCertTemplate fallback if you want, but for now we default to pp.jpeg
+                // If getCertTemplate exists in shared.js and returns a valid URL, it can override it.
+            } catch (e) {
+                console.warn('Firestore template logic error:', e);
+            }
+
+            const templateImg = await new Promise(resolve => {
                 const img = new Image();
                 img.onload = () => resolve(img);
                 img.onerror = () => resolve(null);
-                img.src = 'certificate.jpeg';
+                img.src = templateSrc;
             });
-            const templateImg = await loadTemplate;
 
             if (templateImg) {
-                // Draw the template to fill the canvas
                 ctx.drawImage(templateImg, 0, 0, W, H);
             } else {
-                ctx.fillStyle = '#fff';
+                // Fallback plain background
+                ctx.fillStyle = '#fdf8f0';
                 ctx.fillRect(0, 0, W, H);
-                ctx.fillStyle = '#000';
-                ctx.font = '30px Arial';
-                ctx.fillText('Template missing: certificate.jpeg', W/2, H/2);
+                ctx.strokeStyle = '#8B0000';
+                ctx.lineWidth = 8;
+                ctx.strokeRect(20, 20, W - 40, H - 40);
+                ctx.fillStyle = '#8B0000';
+                ctx.font = "bold 60px 'Cinzel', serif";
+                ctx.textAlign = 'center';
+                ctx.fillText('CERTIFICATE OF APPRECIATION', W / 2, H / 2);
             }
+
+            // ─────────────────────────────────────────────────────────────
+            // TEXT OVERLAY — positioned to align with pp.jpeg blank lines
+            // Template layout (1414 × 1000 canvas):
+            //   Line 1 (y≈496): "This is to certify that Mr/Ms. [NAME]  of  [YEAR]"
+            //   Line 2 (y≈563): "[COLLEGE NAME]" (long underline)
+            //   Line 3 (y≈635): "has actively participated in the event of [EVENT]"
+            // ─────────────────────────────────────────────────────────────
 
             ctx.textBaseline = 'alphabetic';
-            ctx.textAlign = 'center';
-            ctx.fillStyle = '#C60C30'; // Emirates Red, per your theme
+            ctx.fillStyle = '#1a0a00';   // Dark near-black matching printed text
 
-            // --- Participant Name ---
-            ctx.font = "bold 34px 'Cinzel', serif";
-            ctx.fillText(participantName, W / 2 + 100, 506);
+            // ── 1. Participant Name (after "Mr/Ms.") ──
+            ctx.textAlign = 'left';
+            ctx.font = "bold 32px 'Cinzel', serif";
+            ctx.fillText(participantName, 580, 490);
 
-            // --- Year ---
-            ctx.font = "bold 26px 'Cinzel', serif";
-            ctx.fillText(year, W - 350, 506);
+            // ── 2. Year (after "of") on the same line ──
+            ctx.textAlign = 'left';
+            ctx.font = "bold 30px 'Cinzel', serif";
+            ctx.fillText(year, 1110, 490);
 
-            // --- College Name ---
+            // ── 3. College Name (second blank line) ──
             if (collegeName) {
-                ctx.font = "900 26px 'Cinzel', serif"; 
-                ctx.fillText(collegeName, W / 2, 570, 1000);
+                ctx.textAlign = 'center';
+                ctx.font = "bold 30px 'Cinzel', serif";
+                // Clamp college name to fit within blank line width
+                ctx.fillText(collegeName, W / 2, 550, 1060);
             }
 
-            // --- Event Name ---
+            // ── 4. Event Name (after "has actively participated in the event of") ──
+            ctx.textAlign = 'left';
             ctx.font = "bold 28px 'Cinzel', serif";
-            ctx.fillText(eventName, W / 2 + 380, 628, 600);
+            ctx.fillText(eventName, 760, 610, 500);
 
-            // --- Official Signature Overlays ---
-            try {
-                const [arunImg, deanImg, hodImg] = await Promise.all([
-                    new Promise(resolve => {
-                        const img = new Image();
-                        img.onload = () => resolve(img);
-                        img.onerror = () => resolve(null);
-                        img.src = 'arunn.png.jpeg';
-                    }),
-                    new Promise(resolve => {
-                        const img = new Image();
-                        img.onload = () => resolve(img);
-                        img.onerror = () => resolve(null);
-                        img.src = 'dean.jpeg';
-                    }),
-                    new Promise(resolve => {
-                        const img = new Image();
-                        img.onload = () => resolve(img);
-                        img.onerror = () => resolve(null);
-                        img.src = 'hodd.jpeg';
-                    })
-                ]);
-
-                // 1. ARUN Signature Overlay
-                if (arunImg) {
-                    ctx.save();
-                    const patchC = document.createElement('canvas');
-                    patchC.width = 160; patchC.height = 70;
-                    const pctx = patchC.getContext('2d');
-                    pctx.drawImage(canvas, 400, 775, 160, 70, 0, 0, 160, 70);
-                    pctx.globalCompositeOperation = 'destination-in';
-                    pctx.filter = 'blur(10px)';
-                    pctx.fillStyle = 'black';
-                    pctx.fillRect(15, 15, 130, 40);
-                    pctx.filter = 'none';
-                    ctx.drawImage(patchC, 140, 775);
-                    
-                    ctx.filter = 'grayscale(100%) contrast(1000%) brightness(500%)';
-                    ctx.globalCompositeOperation = 'multiply';
-                    const scale = Math.min(220 / arunImg.width, 70 / arunImg.height);
-                    const dw = arunImg.width * scale;
-                    const dh = arunImg.height * scale;
-                    ctx.translate(235, 845);
-                    ctx.drawImage(arunImg, -dw / 2, -dh, dw, dh);
-                    ctx.restore();
+            // ── 5. Event Quote (Centered Below Event Name) ──
+            const fallbackQuote = `"Success is not final, failure is not fatal: it is the courage to continue that counts."`;
+            let quoteText = fallbackQuote;
+            for (const key in EVENT_QUOTES) {
+                if (eventName.toLowerCase().includes(key.toLowerCase())) {
+                    quoteText = EVENT_QUOTES[key];
+                    break;
                 }
-
-                // 2. DEAN Signature Overlay
-                if (deanImg) {
-                    ctx.save();
-                    const patchC = document.createElement('canvas');
-                    patchC.width = 240; patchC.height = 80;
-                    const pctx = patchC.getContext('2d');
-                    pctx.drawImage(canvas, 330, 770, 240, 80, 0, 0, 240, 80);
-                    pctx.globalCompositeOperation = 'destination-in';
-                    pctx.filter = 'blur(12px)';
-                    pctx.fillStyle = 'black';
-                    pctx.fillRect(15, 15, 210, 50); 
-                    pctx.filter = 'none';
-                    ctx.drawImage(patchC, 707 - 120, 770);
-                    
-                    ctx.filter = 'grayscale(100%) contrast(1000%) brightness(500%)';
-                    ctx.globalCompositeOperation = 'multiply';
-                    const scale = Math.min(260 / deanImg.width, 85 / deanImg.height);
-                    const dw = deanImg.width * scale;
-                    const dh = deanImg.height * scale;
-                    ctx.translate(715, 860);
-                    ctx.drawImage(deanImg, -dw / 2, -dh, dw, dh);
-                    
-                    // ERASE AND REDRAW DEAN LABEL
-                    ctx.save();
-                    ctx.resetTransform();
-                    ctx.filter = 'none';
-                    ctx.globalCompositeOperation = 'source-over';
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(560, 878, 300, 32);
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'alphabetic';
-                    ctx.fillStyle = '#5a3e00';
-                    ctx.font = "bold 17px 'Montserrat', sans-serif";
-                    ctx.fillText('DEAN - AURCM', 710, 900);
-                    ctx.restore();
-                    ctx.restore();
-                }
-
-                // 3. HOD Signature Overlay (PERFECTED)
-                if (hodImg) {
-                    ctx.save();
-                    
-                    // ULTIMATE ERASURE of original golden signature
-                    const patchC = document.createElement('canvas');
-                    patchC.width = 460; patchC.height = 180;
-                    const pctx = patchC.getContext('2d');
-                    pctx.filter = 'blur(15px)';
-                    pctx.drawImage(canvas, 950, 700, 460, 180, 0, 0, 460, 180);
-                    pctx.filter = 'none';
-                    pctx.globalCompositeOperation = 'destination-in';
-                    pctx.filter = 'blur(18px)';
-                    pctx.fillStyle = 'black';
-                    pctx.fillRect(20, 20, 420, 140);
-                    pctx.filter = 'none';
-                    ctx.drawImage(patchC, 950, 700);
-                    
-                    // OVERLAY NEW HOD SIGNATURE
-                    ctx.filter = 'grayscale(100%) contrast(1000%) brightness(500%)';
-                    ctx.globalCompositeOperation = 'multiply';
-                    
-                    // Set as horizontal (0 rotation) and increase scale significantly
-                    const scale = Math.min(420 / hodImg.width, 160 / hodImg.height);
-                    const dw = hodImg.width * (scale * 1.15); // Bonus 15% size
-                    const dh = hodImg.height * (scale * 1.15);
-                    
-                    // Centered precisely on the HOD line
-                    ctx.translate(1185, 825); 
-                    ctx.rotate(0); 
-                    ctx.drawImage(hodImg, -dw / 2, -dh / 2, dw, dh);
-                    ctx.restore();
-                }
-            } catch (e) {
-                console.error('Signature load error:', e);
             }
+            ctx.textAlign = 'center';
+            ctx.font = "italic bold 24px Montserrat, sans-serif";
+            ctx.fillStyle = '#A88B3A'; // Elexsiya Gold-Dark Title Theme
+            ctx.fillText(quoteText, W / 2, 745, 1200);
         }
 
         function downloadCertificate(canvasId, eventName, participantName) {
@@ -481,6 +435,74 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        const EVENT_QUOTES = {
+            "Project Expo": `"Innovation distinguishes between a leader and a follower."`,
+            "Idea Forge": `"Ideas are the currency of the future. Never stop forging them."`,
+            "Tazky Among Uz": `"In the game of strategy, trust your instincts and outwit the rest."`,
+            "CurrentClash": `"Electricity is really just organized lightning."`,
+            "Clever Hunt": `"Every puzzle is a conversation with the person who made it."`,
+            "Bug Arena": `"A good programmer looks both ways before crossing a one-way street."`,
+            "Upside Down": `"Sometimes you have to turn everything upside down to find the right perspective."`,
+            "Mindfusion": `"Great minds don't think alike, they think together."`,
+            "Unmuted": `"Your voice and your story possess the power to change the world."`,
+            "Ideart": `"Art is not what you see, but what you make others see."`,
+            "Chess": `"Chess is the gymnasium of the mind. Every move is a new puzzle."`
+        };
+
+        // ── Called when user clicks "Generate My Certificate" button ──
+        async function onGenerateClick() {
+            if (!_certData) return;
+
+            const btn = document.getElementById('generateBtn');
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Generating...';
+
+            const { participantName, eventsList, year, college } = _certData;
+            const container = document.getElementById('certificatesContainer');
+            container.innerHTML = '';
+
+            try {
+                await Promise.all([
+                    document.fonts.load("bold 32px 'Cinzel'"),
+                    document.fonts.load("bold 30px 'Cinzel'"),
+                    document.fonts.load("bold 28px 'Cinzel'")
+                ]);
+            } catch (e) { /* fonts may still be available */ }
+
+            for (let i = 0; i < eventsList.length; i++) {
+                const ev = eventsList[i];
+
+                const flexCol = document.createElement('div');
+                flexCol.style.cssText = 'display:flex; flex-direction:column; align-items:center; width:100%;';
+
+                const wrap = document.createElement('div');
+                wrap.className = 'cert-wrapper';
+                wrap.style.display = 'block';
+
+                const can = document.createElement('canvas');
+                can.id = `certCanvas_${i}`;
+                wrap.appendChild(can);
+
+                const dlBtn = document.createElement('button');
+                dlBtn.className = 'btn btn-download';
+                dlBtn.innerHTML = `📥 Download Certificate — ${ev}`;
+                dlBtn.style.marginTop = '15px';
+                dlBtn.onclick = () => downloadCertificate(`certCanvas_${i}`, ev, participantName);
+
+                flexCol.appendChild(wrap);
+                flexCol.appendChild(dlBtn);
+                container.appendChild(flexCol);
+
+                await drawCertificate(can, participantName, ev, year, null, college);
+            }
+
+            container.style.display = 'flex';
+            document.getElementById('generateBanner').style.display = 'none';
+
+            // Scroll to the first certificate
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // ── Main Portal Init ──
@@ -533,52 +555,27 @@
                     const participantName = user.name || 'Participant';
                     const rawEventString = data.event || user.event || 'Elexsiya 26';
                     const eventsList = rawEventString.split(',').map(e => e.trim()).filter(e => e.length > 0);
-                    
-                    const year = sessionStorage.getItem('partYear') || '2nd';
+
+                    const year = sessionStorage.getItem('partYear') || '2nd Year';
                     const college = data.college || data.collegeName || '';
-                    const container = document.getElementById('certificatesContainer');
-                    container.innerHTML = '';
 
-                    try {
-                        await Promise.all([
-                            document.fonts.load('bold 42px Cinzel'),
-                            document.fonts.load('300 20px Montserrat'),
-                            document.fonts.load('400 48px Sacramento')
-                        ]);
-                    } catch (e) { }
+                    // Store cert data and show the "Generate" banner
+                    _certData = { participantName, eventsList, year, college };
+                    document.getElementById('genEventNames').textContent = eventsList.join(', ');
+                    document.getElementById('generateBanner').style.display = 'block';
 
-                    setTimeout(async () => {
-                        for (let i = 0; i < eventsList.length; i++) {
-                            const ev = eventsList[i];
-                            const wrap = document.createElement('div');
-                            wrap.className = 'cert-wrapper';
-                            wrap.style.display = 'block';
-                            const can = document.createElement('canvas');
-                            can.id = `certCanvas_${i}`;
-                            wrap.appendChild(can);
-                            const btn = document.createElement('button');
-                            btn.className = 'btn btn-download';
-                            btn.innerHTML = `📥 Download Certificate - ${ev}`;
-                            btn.style.marginTop = '15px';
-                            btn.onclick = () => downloadCertificate(`certCanvas_${i}`, ev, participantName);
-                            const flexCol = document.createElement('div');
-                            flexCol.style.display = 'flex'; flexCol.style.flexDirection = 'column'; flexCol.style.alignItems = 'center';
-                            flexCol.appendChild(wrap);
-                            flexCol.appendChild(btn);
-                            container.appendChild(flexCol);
-                            await drawCertificate(can, participantName, ev, year, user.regId, college);
-                        }
-                        container.style.display = 'flex';
-                    }, 150);
                 } else {
                     document.getElementById('certPendingBanner').style.display = 'block';
                 }
+
                 document.getElementById('loadingOverlay').style.display = 'none';
+
             } catch (err) {
                 console.error(err);
                 document.getElementById('loadingOverlay').style.display = 'none';
                 document.getElementById('certPendingBanner').style.display = 'block';
-                document.getElementById('certPendingBanner').innerHTML = `<h3>Error Loading Data</h3><p>${err.message}</p>`;
+                document.getElementById('certPendingBanner').innerHTML =
+                    `<div class="icon">⚠️</div><h3>Error Loading Data</h3><p>${err.message}</p>`;
             }
         }
 
