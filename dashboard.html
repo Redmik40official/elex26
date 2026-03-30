@@ -3360,6 +3360,7 @@
                         ${!isTreasurerSide ? `
                             <button class="action-btn edit" title="Edit" onclick="openEditModal('${r.regId}')">&#9998;</button>
                             <button class="action-btn toggle" title="Toggle Payment" onclick="togglePayment('${r.regId}','${r.paymentStatus}',this)">&#128179;</button>
+                            <button class="action-btn" title="Push Certificate" onclick="pushCert('${r.regId}', this)" style="background:${r.certReleased ? '#16a34a' : '#f4f4f4'}; color:${r.certReleased ? 'white' : '#666'}; border-radius:4px; padding:4px 8px; font-size:0.7rem; font-weight:700; border:1px solid ${r.certReleased ? '#16a34a' : '#ddd'};">${r.certReleased ? '✓ PUSHED' : '🚀 PUSH'}</button>
                             ${isSuperUser ? `<button class="action-btn delete" title="Delete" onclick="deleteSingleReg('${r.regId}')">&#128465;</button>` : ''}
                         ` : `
                             <button class="action-btn toggle" title="Toggle Payment" onclick="togglePayment('${r.regId}','${r.paymentStatus}',this)">&#128179;</button>
@@ -6000,6 +6001,68 @@
             }
         }
         /* ── End Sponsorship Logic ── */
+
+        // ── Certificate Management ──
+        async function pushCert(regId, btnElement) {
+            btnElement.disabled = true;
+            btnElement.textContent = '...';
+            try {
+                const reg = allRegistrations.find(r => r.regId === regId);
+                const newStatus = !reg.certReleased;
+                await updateCertStatus(regId, newStatus);
+                reg.certReleased = newStatus;
+                
+                btnElement.style.background = newStatus ? '#16a34a' : '#f4f4f4';
+                btnElement.style.color = newStatus ? 'white' : '#666';
+                btnElement.style.borderColor = newStatus ? '#16a34a' : '#ddd';
+                btnElement.textContent = newStatus ? '✓ PUSHED' : '🚀 PUSH';
+                btnElement.disabled = false;
+            } catch(e) {
+                alert('Error updating certificate status: ' + e.message);
+                btnElement.disabled = false;
+                btnElement.textContent = 'Error';
+            }
+        }
+
+        async function handleCertUpload(inputEl) {
+            const file = inputEl.files[0];
+            if (!file) return;
+            const btn = inputEl.nextElementSibling;
+            const prevText = btn.innerHTML;
+            btn.innerHTML = '⏳ Uploading...';
+            btn.disabled = true;
+
+            try {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    const base64 = e.target.result;
+                    await saveCertTemplate(base64);
+                    const preview = document.getElementById('certTemplatePreview');
+                    preview.innerHTML = `<img src="${base64}" style="max-width:100%; height:auto; border-radius:4px;" />`;
+                    btn.innerHTML = prevText;
+                    btn.disabled = false;
+                    alert('Certificate Template Uploaded Successfully!');
+                };
+                reader.readAsDataURL(file);
+            } catch(err) {
+                alert('Upload Failed: ' + err.message);
+                btn.innerHTML = prevText;
+                btn.disabled = false;
+            }
+        }
+
+        async function loadCertTemplate() {
+            try {
+                const preview = document.getElementById('certTemplatePreview');
+                if(!preview) return;
+                const templateResponse = await getCertTemplate();
+                if(templateResponse && templateResponse.imageData) {
+                    preview.innerHTML = `<img src="${templateResponse.imageData}" style="max-width:100%; height:auto; border-radius:4px;" />`;
+                }
+            } catch(err) {
+                console.error('Error loading cert template preview', err);
+            }
+        }
 
         // Initial load
         async function waitForDb(cb, n = 25) {
